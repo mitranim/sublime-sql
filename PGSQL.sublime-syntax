@@ -89,9 +89,15 @@ contexts:
       scope: constant.character.escape.pgsql
 
   match-operator:
+    - include: match-cast
+    - include: match-operator-any
+
+  match-cast:
     - match: '::'
       scope: keyword.operator.cast.pgsql
       push: pop-type
+
+  match-operator-any:
     - match: '{{operator}}'
       scope: keyword.operator.pgsql
 
@@ -326,13 +332,17 @@ contexts:
       set: pop-function-params-and-rest
     - include: main
 
+  # Incomplete. TODO support:
+  #   * Type namespaces (schema names followed by a).
+  #   * Signatures without parameter names.
+  #   * Additional keywords like `inout`.
+  #   * More complex type constructs (see `pop-type`).
   pop-function-params-and-rest:
     - include: pop-at-semi
     - match: \)
       scope: punctuation.section.parens.end.pgsql
       set: pop-function-meta-and-rest
     - include: match-keyword-reserved
-    # TODO: support other type constructs.
     - match: '({{ident_any}})\s*({{ident_any}})'
       captures:
         1: variable.parameter.pgsql
@@ -351,7 +361,7 @@ contexts:
 
   pop-function-return:
     - include: pop-at-semi
-    - match: (?i)\btrigger\b
+    - match: (?i)\btrigger|table\b
       scope: keyword.pgsql
       set: pop-function-meta-and-rest
     # TODO: support other type constructs.
@@ -392,6 +402,7 @@ contexts:
     - match: '{{ident_any}}'
       scope: entity.name.constraint.pgsql
       set: pop-constraint-body
+    - include: pop-before-nonblank
 
   pop-constraint-body:
     - include: pop-at-comma-and-before-paren
@@ -465,6 +476,7 @@ contexts:
     - match: '{{ident_any}}'
       scope: storage.type.pgsql
       pop: true
+    - include: pop-before-nonblank
 
   # TODO: support multi-token constructs.
   match-type:

@@ -8,7 +8,8 @@ Differences from the built-in SQL syntax and the PgSQL package available on Pack
 * Detects types contextually, where types are expected, without relying on a whitelist of built-ins. There's no difference between pre-defined and user-defined types.
 * No unnecessary scopes for built-in functions or types.
 * Prefers to scope keywords as `keyword` rather than `storage` (may reconsider for some contexts).
-* Adheres much more closely to ST scope conventions while respecting SQL semantics.
+* Adheres more closely to ST scope conventions while respecting SQL semantics.
+* Supports ordinal parameters like `$1` and named parameters like `:ident`.
 
 Current limitations:
 
