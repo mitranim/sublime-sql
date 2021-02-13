@@ -1,0 +1,85 @@
+%YAML 1.2
+---
+version: 2
+file_extensions: [explain, explan]
+extends: Packages/sublime-sql/PGSQL Common.sublime-syntax
+scope: source.explan
+
+# Syntax for the output of Postgres' `explain` statement.
+
+variables:
+  ident_lower: \b[a-z][{{ident_chars}}]*\b
+  ident_title: \b[A-Z][{{ident_chars}}]*\b
+  phrase_lower: '(?:(?:{{ident_lower}}\s+)*{{ident_lower}})'
+  phrase_title: '(?:(?:{{ident_title}}\s+)*{{ident_title}})'
+
+contexts:
+  # Difference: no invalid part.
+  match-number-dec:
+    - match: \d+(\.)\d+
+      scope: constant.numeric.decimal.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: \d+
+      scope: constant.numeric.decimal.pgsql
+
+  # Difference: support colon.
+  match-punctuation:
+    - include: match-dot
+    - include: match-comma
+    - include: match-semi
+    - include: match-colon
+    - include: match-paren
+    - include: match-bracket
+    - include: match-brace
+
+  match-colon:
+    - match: '\:'
+      scope: punctuation.definition.explan
+
+  match-ident:
+    - include: match-attr
+    - include: match-on
+    - include: match-using
+    - include: match-action-phrase
+    - include: match-ident-other
+
+  match-attr:
+    - match: '{{phrase_lower}}(?==)'
+      scope: entity.other.attribute-name.explan
+
+  match-on:
+    - match: (?i)\bon\b
+      scope: keyword.other.explan
+      push: pop-ident-with-alias
+
+  match-using:
+    - match: (?i)\busing\b
+      scope: keyword.other.explan
+      push: pop-ident-other
+
+  pop-ident-with-alias:
+    - match: '{{ident_any}}'
+      scope: variable.other.explan
+      set: pop-ident-alias
+    - include: pop-before-nonblank
+
+  pop-ident-alias:
+    - match: (?i)\bas\b
+      scope: keyword.other.explan
+      set: pop-ident-other
+    - include: pop-ident-other
+
+  pop-ident-other:
+    - match: '{{ident_any}}'
+      scope: variable.other.explan
+      pop: true
+    - include: pop-before-nonblank
+
+  match-action-phrase:
+    - match: '{{phrase_title}}'
+      scope: keyword.other.explan
+
+  match-ident-other:
+    - match: '{{ident_any}}'
+      scope: variable.other.pgsql

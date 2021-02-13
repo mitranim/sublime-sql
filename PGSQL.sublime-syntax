@@ -2,170 +2,12 @@
 ---
 version: 2
 file_extensions: [pgsql, sql]
+extends: Packages/sublime-sql/PGSQL Common.sublime-syntax
 scope: source.pgsql
 
-variables:
-  comment_line_start: '--'
-  comment_block_start: '/\*'
-  comment_block_end: '\*/'
-  ident_chars: '[:alnum:]_'
-  ident_normal: \b[[:alpha:]_][{{ident_chars}}]*\b
-  ident_quoted: '"[^"]+"'
-  ident_any: (?:{{ident_normal}}|{{ident_quoted}})
-  operator: '[\*\/\<\>\=\~\!\@\#\%\^\&\|\`\?\+\-]+'
-
-  # https://www.postgresql.org/docs/current/sql-keywords-appendix.html
-  # https://github.com/postgres/postgres/blob/master/src/include/parser/kwlist.h
-  keyword_reserved: \b(?:(?i)all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b
-  # keyword_any: \b(?:(?i)abort|absolute|access|action|add|admin|after|aggregate|all|also|alter|always|analyse|analyze|and|any|array|as|asc|assertion|assignment|asymmetric|at|attach|attribute|authorization|backward|before|begin|between|bigint|binary|bit|boolean|both|by|cache|call|called|cascade|cascaded|case|cast|catalog|chain|char|character|characteristics|check|checkpoint|class|close|cluster|coalesce|collate|collation|column|columns|comment|comments|commit|committed|concurrently|configuration|conflict|connection|constraint|constraints|content|continue|conversion|copy|cost|create|cross|csv|cube|current|current_catalog|current_date|current_role|current_schema|current_time|current_timestamp|current_user|cursor|cycle|data|database|day|deallocate|dec|decimal|declare|default|defaults|deferrable|deferred|definer|delete|delimiter|delimiters|depends|desc|detach|dictionary|disable|discard|distinct|do|document|domain|double|drop|each|else|enable|encoding|encrypted|end|enum|escape|event|except|exclude|excluding|exclusive|execute|exists|explain|expression|extension|external|extract|false|family|fetch|filter|first|float|following|for|force|foreign|forward|freeze|from|full|function|functions|generated|global|grant|granted|greatest|group|grouping|groups|handler|having|header|hold|hour|identity|if|ilike|immediate|immutable|implicit|import|in|include|including|increment|index|indexes|inherit|inherits|initially|inline|inner|inout|input|insensitive|insert|instead|int|integer|intersect|interval|into|invoker|is|isnull|isolation|join|key|label|language|large|last|lateral|leading|leakproof|least|left|level|like|limit|listen|load|local|localtime|localtimestamp|location|lock|locked|logged|mapping|match|materialized|maxvalue|method|minute|minvalue|mode|month|move|name|names|national|natural|nchar|new|next|no|none|not|nothing|notify|notnull|nowait|null|nullif|nulls|numeric|object|of|off|offset|oids|old|on|only|operator|option|options|or|order|ordinality|others|out|outer|over|overlaps|overlay|overriding|owned|owner|parallel|parser|partial|partition|passing|password|placing|plans|policy|position|preceding|precision|prepare|prepared|preserve|primary|prior|privileges|procedural|procedure|procedures|program|publication|quote|range|read|real|reassign|recheck|recursive|ref|references|referencing|refresh|reindex|relative|release|rename|repeatable|replace|replica|reset|restart|restrict|returning|returns|revoke|right|role|rollback|rollup|routine|routines|row|rows|rule|savepoint|schema|schemas|scroll|search|second|security|select|sequence|sequences|serializable|server|session|session_user|set|setof|sets|share|show|similar|simple|skip|smallint|snapshot|some|sql|stable|standalone|start|statement|statistics|stdin|stdout|storage|stored|strict|strip|subscription|substring|support|symmetric|sysid|system|table|tables|tablesample|tablespace|temp|template|temporary|text|then|ties|time|timestamp|to|trailing|transaction|transform|treat|trigger|trim|true|truncate|trusted|type|types|uescape|unbounded|uncommitted|unencrypted|union|unique|unknown|unlisten|unlogged|until|update|user|using|vacuum|valid|validate|validator|value|values|varchar|variadic|varying|verbose|version|view|views|volatile|when|where|whitespace|window|with|within|without|work|wrapper|write|xml|xmlattributes|xmlconcat|xmlelement|xmlexists|xmlforest|xmlnamespaces|xmlparse|xmlpi|xmlroot|xmlserialize|xmltable|year|yes|zone)\b
-
 contexts:
-  prototype:
-    - include: match-comment
-
-  main:
-    - include: match-number
-    - include: match-string
-    - include: match-operator
-    - include: match-ident
-    - include: match-punctuation
-
-  match-comment:
-    - include: match-comment-line
-    - include: match-comment-block
-
-  match-comment-line:
-    - match: '({{comment_line_start}}).*(\n|$)'
-      scope: comment.line.pgsql
-      captures:
-        1: punctuation.definition.comment.begin.pgsql
-
-  match-comment-block:
-    - match: '{{comment_block_start}}'
-      scope: punctuation.definition.comment.begin.pgsql
-      push: pop-comment-block
-
-  pop-comment-block:
-    - meta_scope: comment.block.pgsql
-    - match: '{{comment_block_end}}'
-      scope: punctuation.definition.comment.end.pgsql
-      pop: true
-    - include: match-comment-block
-
-  match-number:
-    - include: match-number-dec
-
-  # TODO: support exponent.
-  match-number-dec:
-    - match: \d+(\.)\d+([{{ident_chars}}]*)
-      scope: constant.numeric.decimal.pgsql
-      captures:
-        1: punctuation.separator.decimal.pgsql
-        2: invalid.illegal.pgsql
-    - match: \d+([{{ident_chars}}]*)
-      scope: constant.numeric.decimal.pgsql
-      captures:
-        1: invalid.illegal.pgsql
-
-  match-string:
-    - include: match-string-single
-
-  match-string-single:
-    - match: (\b[Ee])?(\')
-      captures:
-        1: storage.modifier.pgsql
-        2: punctuation.definition.string.begin.pgsql
-      push: pop-string-single
-
-  pop-string-single:
-    - meta_include_prototype: false
-    - meta_scope: string.quoted.single.pgsql
-    - match: \'\'
-      scope: constant.character.escape.pgsql
-    - match: \'
-      scope: punctuation.definition.string.end.pgsql
-      pop: true
-    - match: \\[^'\n]
-      scope: constant.character.escape.pgsql
-
-  match-operator:
-    - include: match-cast
-    - include: match-operator-any
-
-  match-cast:
-    - match: '::'
-      scope: keyword.operator.cast.pgsql
-      push: pop-type
-
-  match-operator-any:
-    - match: '{{operator}}'
-      scope: keyword.operator.pgsql
-
-  match-punctuation:
-    - include: match-dot
-    - include: match-comma
-    - include: match-semi
-    - include: match-paren
-    - include: match-bracket
-    - include: match-brace
-
-  match-dot:
-    - match: \.
-      scope: punctuation.accessor.dot.pgsql
-
-  match-comma:
-    - match: \,
-      scope: punctuation.separator.sequence.pgsql
-
-  match-semi:
-    - match: (?=;)
-      push: pop-at-semi
-
-  match-paren:
-    - match: \(
-      scope: punctuation.section.parens.begin.pgsql
-      push: pop-paren
-    - match: \)
-      scope: punctuation.section.parens.end.pgsql invalid.illegal.pgsql
-
-  pop-paren:
-    - meta_scope: meta.parens.pgsql
-    - match: \)
-      scope: punctuation.section.parens.end.pgsql
-      pop: true
-    - include: main
-
-  match-bracket:
-    - match: \[
-      scope: punctuation.section.brackets.begin.pgsql
-      push: pop-bracket
-    - match: \]
-      scope: punctuation.section.brackets.end.pgsql invalid.illegal.pgsql
-
-  pop-bracket:
-    - meta_scope: meta.brackets.pgsql
-    - match: \]
-      scope: punctuation.section.brackets.end.pgsql
-      pop: true
-    - include: main
-
-  match-brace:
-    - match: \{
-      scope: punctuation.section.braces.begin.pgsql
-      push: pop-brace
-    - match: \}
-      scope: punctuation.section.braces.end.pgsql invalid.illegal.pgsql
-
-  pop-brace:
-    - meta_scope: meta.braces.pgsql
-    - match: \}
-      scope: punctuation.section.braces.end.pgsql
-      pop: true
-    - include: main
-
   match-ident:
     - include: match-ident-keyword
-    # - include: match-ident-call
     - include: match-ident-param-ordinal
     - include: match-ident-param-named
     - include: match-ident-other
@@ -197,6 +39,7 @@ contexts:
         2: keyword.pgsql
         3: keyword.pgsql
         4: keyword.pgsql
+    # Problem: generates false positives. Must be made more contextual.
     - match: (?i)\bconstraint\b
       scope: keyword.declaration.pgsql
       push: pop-constraint-name-and-body
@@ -206,11 +49,6 @@ contexts:
         2: keyword.pgsql
     - match: '{{keyword_reserved}}'
       scope: keyword.reserved.pgsql
-
-  # Mis-identifies a lot of non-calls as calls.
-  match-ident-call:
-    - match: '{{ident_any}}(?=\s*\()'
-      scope: variable.function.pgsql
 
   match-ident-param-ordinal:
     - match: ((\$)\d+)([{{ident_chars}}\.]*)
@@ -269,6 +107,7 @@ contexts:
   pop-create-extension:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.extension.pgsql
@@ -278,6 +117,7 @@ contexts:
   pop-create-schema:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.schema.pgsql
@@ -287,6 +127,7 @@ contexts:
   pop-create-type:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.type.pgsql
@@ -304,6 +145,7 @@ contexts:
   pop-create-domain:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.type.pgsql
@@ -319,6 +161,7 @@ contexts:
   pop-create-function:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.function.pgsql
@@ -372,6 +215,7 @@ contexts:
   pop-create-table:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.type.table.pgsql
@@ -398,6 +242,7 @@ contexts:
     - include: main
 
   pop-constraint-name-and-body:
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.constraint.pgsql
@@ -413,6 +258,8 @@ contexts:
 
   pop-column-type:
     - include: pop-at-comma-and-before-paren
+    - include: pop-before-reserved-keyword
+    - include: match-prefix-namespace
     # TODO: support other type constructs.
     - match: '{{ident_any}}'
       scope: storage.type.pgsql
@@ -430,6 +277,7 @@ contexts:
   pop-create-index:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.index.pgsql
@@ -444,6 +292,7 @@ contexts:
   pop-create-trigger:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.trigger.pgsql
@@ -458,6 +307,7 @@ contexts:
   pop-create-view:
     - include: pop-at-semi
     - include: match-if-not-exists
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.type.view.pgsql
@@ -471,15 +321,8 @@ contexts:
     - include: main
 
   # TODO: support multi-token constructs.
-  pop-type:
-    - include: match-prefix-namespace
-    - match: '{{ident_any}}'
-      scope: storage.type.pgsql
-      pop: true
-    - include: pop-before-nonblank
-
-  # TODO: support multi-token constructs.
   match-type:
+    - include: pop-before-reserved-keyword
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: storage.type.pgsql
@@ -488,43 +331,10 @@ contexts:
     - match: (?i)\b(?:if|not|exists)\b
       scope: keyword.pgsql
 
-  match-as:
-    - match: (?i)\b(?:as)\b
-      scope: keyword.pgsql
-
-  pop-at-semi:
-    - match: \;
-      scope: punctuation.terminator.pgsql
-      pop: true
-
-  pop-at-comma:
-    - match: \,
-      scope: punctuation.separator.sequence.pgsql
-      pop: true
-
-  pop-at-paren:
-    - match: \)
-      scope: punctuation.section.parens.end.pgsql
-      pop: true
-
-  pop-before-paren:
-    - match: (?=\))
-      pop: true
-
   pop-at-comma-and-before-paren:
     - include: pop-at-comma
     - include: pop-before-paren
 
-  pop-before-nonblank:
-    - match: (?=\S)
-      pop: true
-
   pop-before-table-keywords:
     - match: (?=(?i)\bconstraint\b)
       pop: true
-
-  match-prefix-namespace:
-    - match: '({{ident_any}})\s*(\.)'
-      captures:
-        1: variable.other.pgsql
-        2: punctuation.accessor.pgsql

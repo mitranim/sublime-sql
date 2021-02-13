@@ -10,10 +10,12 @@ Differences from the built-in SQL syntax and the PgSQL package available on Pack
 * Prefers to scope keywords as `keyword` rather than `storage` (may reconsider for some contexts).
 * Adheres more closely to ST scope conventions while respecting SQL semantics.
 * Supports ordinal parameters like `$1` and named parameters like `:ident`.
+* (Tentative) Comes with a syntax for the output of Postgres `explain` (PGSQL Explan).
 
 Current limitations:
 
 * Only the Postgres dialect is implemented.
+* Doesn't implement some non-reserved but common keywords such as `update` or `delete`.
 * Doesn't implement some contextual keywords such as `on update cascade`.
 * NYI: PL/PGSQL.
 * NYI: multi-word types.
@@ -33,6 +35,14 @@ ln -sf "$(pwd)" "$HOME/Library/Application Support/Sublime Text 3/Packages/"
 ```
 
 To find the packages directory on your system, use Sublime Text menu → Preferences → Browse Packages.
+
+## TODO
+
+(Because I'll forget otherwise.)
+
+* More contextual keywords.
+* PL/PGSQL.
+* Better support for types.
 
 ## License
 
