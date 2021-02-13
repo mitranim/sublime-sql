@@ -1,0 +1,10 @@
+/*
+!/sbnf
+/sbnf/*
+!.gitignore
+!unlicense
+!*.md
+!*.tmPreferences
+!*.sbnf
+!*.sublime-syntax
+sbnf/*.sublime-syntax

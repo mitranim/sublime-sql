@@ -1,0 +1,139 @@
+name: pgsql_sbnf
+
+# Overview. Should be kept terse.
+prototype   = (~comment)*;
+main        = (~any)*;
+comment     = comment_line | comment_block;
+any         = punctuation | number | string | operator | ident;
+number      = number_float | number_int;
+punctuation = dot | comma | semi | parens | brackets | braces;
+operator    = operator_cast | operator_any;
+ident       = keyword | param | ident_other;
+# keyword     = bool | create | keyword_expr | reserved;
+keyword     = bool | create | reserved;
+param       = param_ordinal | param_named;
+
+comment_line{comment.line}   = '--'{punctuation.definition.comment}~'$';
+comment_block{comment.block} = comment_block_begin (~comment_block)* ~comment_block_end;
+comment_block_begin          = `/*`{punctuation.definition.comment.begin};
+comment_block_end            = `*/`{punctuation.definition.comment.end};
+
+dot           = `.`{punctuation.accessor.dot};
+comma         = `,`{punctuation.separator.sequence};
+semi          = `;`{punctuation.terminator};
+parens        = paren_begin (~any)* paren_end;
+brackets      = bracket_begin (~any)* bracket_end;
+braces        = brace_begin (~any)* brace_end;
+paren_begin   = `(`{punctuation.section.parens.begin};
+paren_end     = `)`{punctuation.section.parens.end};
+bracket_begin = `[`{punctuation.section.brackets.begin};
+bracket_end   = `]`{punctuation.section.brackets.end};
+brace_begin   = `{`{punctuation.section.braces.begin};
+brace_end     = `}`{punctuation.section.braces.end};
+
+# TODO support the `Ee` notation.
+number_float = '\d+(\.)\d+'{constant.numeric, 1: punctuation.separator.decimal};
+number_int = '\d+'{constant.numeric};
+
+# TODO: without prototype.
+# TODO: support escapes depending on the presence of the `E` modifier.
+# https://www.postgresql.org/docs/current/sql-syntax-lexical.html
+string{string.single} = string_begin ~string_end;
+string_begin          = `(\b[Ee])?(')`{1: storage.modifier, 2: punctuation.definition.string.begin};
+string_end            = `'`{punctuation.definition.string.end};
+
+operator_cast = `::`{keyword.operator} storage_type?;
+operator_any = '[\*\/\<\>\=\~\!\@\#\%\^\&\|\`\?\+\-]+'{keyword.operator};
+
+param_ordinal = '(\$)\d+'{variable.parameter.ordinal, 1: punctuation.definition.variable};
+param_named = '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'{variable.parameter.named, 1: punctuation.definition.variable};
+
+ident_other{variable.other} = ident_any;
+bool{constant.language.bool} = kwp['true|false'];
+reserved{keyword.reserved} = kwp['all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with'];
+
+# Causes ST to hang when editing SQL.
+keyword_expr =
+  kw['is'] kw['not']? (bool | kw['null'] | kw['unknown'] | (kw['distinct'] kw['from']));
+
+  # kw['is'] kw['not']? bool |
+  # kw['is'] kw['not']? kw['null'] |
+  # kw['is'] kw['not']? kw['unknown'] |
+  # kw['is'] kw['not']? kw['distinct'] kw['from'];
+
+  # kw['is']           bool |
+  # kw['is']           kw['null'] |
+  # kw['is']           kw['unknown'] |
+  # kw['is']           kw['distinct'] kw['from']
+  # kw['is'] kw['not'] bool |
+  # kw['is'] kw['not'] kw['null'] |
+  # kw['is'] kw['not'] kw['unknown'] |
+  # kw['is'] kw['not'] kw['distinct'] kw['from'];
+
+# TODO: fallback on `create` not followed by anything.
+# Appending `| kw['create']` can cause ST to hang.
+#
+# https://www.postgresql.org/docs/current/sql-commands.html
+create =
+  create_schema    |
+  create_extension |
+  create_type      |
+  create_domain    |
+  create_table     |
+  create_trigger   |
+  create_function  |
+  create_index     |
+  create_view;
+
+create_schema    = kw['create'] kw['schema'] if_not_exists? id[`entity.name.schema`];
+create_extension = kw['create'] kw['extension'] if_not_exists?;
+create_type      = kw['create'] kw['type'] id[`entity.name.type`] (kw['as'] kw['enum'])?;
+create_domain    = kw['create'] kw['domain'] id[`entity.name.type`] kw['as'] storage_type constraint?;
+create_index     = create_or_replace kw['unique']? kw['index'] if_not_exists? id[`entity.name.index`];
+create_view      = create_or_replace kw['materialized']? kw['view'] id[`entity.name.view`];
+
+create_table = create_or_replace kw['table'] if_not_exists? id[`entity.name.type.table`]
+  paren_begin
+  (column (comma constraint | comma column | constraint | any)*)?
+  paren_end;
+
+# Note: we're not scoping the procedure call as `variable.function` because the
+# latter isn't generally supported by this syntax yet. Supporting it only here
+# would be surprising.
+create_trigger = create_or_replace kw['trigger'] if_not_exists? id[`entity.name.trigger`]
+  (
+    kw['after|before|or|insert|update|delete']*
+    kw['on'] ident_other
+    kw['for|each|row|statement|execute']*
+    kw['procedure']
+  )?;
+
+# TODO support modifiers and function body as PLPGSQL.
+# https://www.postgresql.org/docs/current/sql-createfunction.html
+create_function = create_or_replace kw['function'] if_not_exists? id[`entity.name.function`]
+  fn_params
+  fn_return?;
+
+# TODO support various modifiers, defaults, etc.
+fn_params = paren_begin (reserved | fn_param | any)* paren_end;
+fn_param  = id[`variable.parameter`]? storage_type;
+fn_return = kw['returns'] (kw['trigger'] | storage_type);
+
+constraint = kw['constraint'] id[`entity.name.constraint`];
+column     = id[`variable.other.member.declaration`] storage_type;
+
+# TODO support types with `[]`, types consisting of multiple words, parametrized
+# types, etc. TODO better name.
+storage_type{storage.type} = ident_any;
+
+create_or_replace = (kw['create'] kw['or'] kw['replace']) | kw['create'];
+if_not_exists     = kw['if'] kw['not'] kw['exists'];
+
+kwp[pattern]         = '(?i)\b(?:#[pattern])\b';
+kw[pattern]{keyword} = kwp[pattern];
+
+# TODO support optional namespace whose scope isn't applied to the rightmost ident.
+id[scope]{#[scope]} = ident_any;
+ident_any           = ident_normal | ident_quoted;
+ident_normal        = '\b[[:alpha:]_][[:alnum:]_]*\b';
+ident_quoted        = '"[^"]+"';
