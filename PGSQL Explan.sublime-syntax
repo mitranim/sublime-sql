@@ -23,26 +23,20 @@ contexts:
     - match: \d+
       scope: constant.numeric.decimal.pgsql
 
-  # Difference: support colon.
   match-punctuation:
-    - include: match-dot
-    - include: match-comma
-    - include: match-semi
+    - meta_prepend: true
     - include: match-colon
-    - include: match-paren
-    - include: match-bracket
-    - include: match-brace
 
   match-colon:
     - match: '\:'
       scope: punctuation.definition.explan
 
   match-ident:
+    - meta_prepend: true
     - include: match-attr
     - include: match-on
     - include: match-using
     - include: match-action-phrase
-    - include: match-ident-other
 
   match-attr:
     - match: '{{phrase_lower}}(?==)'
@@ -79,7 +73,3 @@ contexts:
   match-action-phrase:
     - match: '{{phrase_title}}'
       scope: keyword.other.explan
-
-  match-ident-other:
-    - match: '{{ident_any}}'
-      scope: variable.other.pgsql

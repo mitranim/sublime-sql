@@ -7,10 +7,8 @@ scope: source.pgsql
 
 contexts:
   match-ident:
+    - meta_prepend: true
     - include: match-ident-keyword
-    - include: match-ident-param-ordinal
-    - include: match-ident-param-named
-    - include: match-ident-other
 
   match-ident-keyword:
     - include: match-keyword-reserved
@@ -49,23 +47,6 @@ contexts:
         2: keyword.pgsql
     - match: '{{keyword_reserved}}'
       scope: keyword.reserved.pgsql
-
-  match-ident-param-ordinal:
-    - match: ((\$)\d+)([{{ident_chars}}\.]*)
-      captures:
-        1: variable.parameter.ordinal.pgsql
-        2: punctuation.definition.variable.pgsql
-        3: invalid.illegal.pgsql
-
-  match-ident-param-named:
-    - match: (?!<:)(:){{ident_normal}}
-      scope: variable.parameter.named.pgsql
-      captures:
-        1: punctuation.definition.variable.pgsql
-
-  match-ident-other:
-    - match: '{{ident_any}}'
-      scope: variable.other.pgsql
 
   pop-create:
     - include: pop-at-semi
