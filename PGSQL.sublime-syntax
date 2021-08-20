@@ -197,6 +197,7 @@ contexts:
     - include: pop-at-semi
     - include: match-if-not-exists
     - include: pop-before-reserved-keyword
+    - include: pop-before-paren-end
     - include: match-prefix-namespace
     - match: '{{ident_any}}'
       scope: entity.name.type.table.pgsql
@@ -205,14 +206,14 @@ contexts:
 
   pop-table-definition:
     - include: pop-at-semi
-    - include: match-as
+    - include: pop-before-as
     - match: \(
       scope: punctuation.section.parens.begin.pgsql
       set: pop-table-inside-parens
     - include: main
 
   pop-table-inside-parens:
-    - include: pop-at-paren
+    - include: pop-at-paren-end
     - match: (?i)\bconstraint\b
       scope: keyword.declaration.pgsql
       push: pop-constraint-name-and-body
@@ -314,7 +315,7 @@ contexts:
 
   pop-at-comma-and-before-paren:
     - include: pop-at-comma
-    - include: pop-before-paren
+    - include: pop-before-paren-end
 
   pop-before-table-keywords:
     - match: (?=(?i)\bconstraint\b)

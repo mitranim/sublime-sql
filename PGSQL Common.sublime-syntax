@@ -220,12 +220,12 @@ contexts:
       scope: punctuation.separator.sequence.pgsql
       pop: true
 
-  pop-at-paren:
+  pop-at-paren-end:
     - match: \)
       scope: punctuation.section.parens.end.pgsql
       pop: true
 
-  pop-before-paren:
+  pop-before-paren-end:
     - match: (?=\))
       pop: true
 
@@ -235,6 +235,10 @@ contexts:
 
   pop-before-reserved-keyword:
     - match: (?={{keyword_reserved}})
+      pop: true
+
+  pop-before-as:
+    - match: (?=(?i)\b(?:as)\b)
       pop: true
 
   # Should precede declared identifiers and type names. Should usually be
