@@ -2,7 +2,7 @@
 ---
 version: 2
 file_extensions: [explain, explan]
-extends: Packages/sublime-sql/PGSQL Common.sublime-syntax
+extends: Packages/sublime-sql/archive_yaml/PGSQL Common.sublime-syntax
 scope: source.explan
 hidden: true
 

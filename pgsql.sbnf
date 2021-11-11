@@ -1,6 +1,6 @@
 SCOPE = 'source.pgsql'
 
-# High-level. Should be kept terse.
+# High-level, should be terse.
 prototype   : (~comment)* ;
 main        : (~any)* ;
 comment     : comment-line | comment-block ;
@@ -13,15 +13,16 @@ keyword     : bool | kw-common | kw-reserved ;
 param       : param-ordinal | param-named ;
 atom        : number | string | ident-other ;
 
-NONE = `dede961a7c944bdca31f56b82e486e05`
-
 # Reference:
 # https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS
 #
 # Postgres currently does not allow the empty quoted identifier "", but for our
 # purposes it's better to scope it like an identifier.
-IDENT= '\b[[:alpha:]_][[:alnum:]_]*\b'
+IDENT        = '\b[[:alpha:]_][[:alnum:]_]*\b'
 IDENT_QUOTED = '"[^"]*"'
+
+# Syntactic hack. Should never match real text.
+NONE = `dede961a7c944bdca31f56b82e486e05`
 
 comment-line{comment.line}   : '--'{punctuation.definition.comment}~'\n' ;
 comment-block{comment.block} : comment-block-begin (~comment-block)* ~comment-block-end ;
@@ -209,11 +210,11 @@ alter-table-action-alter-column-drop :
 type-using : kw['type'] ident-storage-type kw['using']? ;
 
 # TODO support various modifiers, defaults, etc.
-fn-params   : paren-begin (kw-reserved | param-typed | any)* paren-end ;
+fn-params : paren-begin (kw-reserved | param-typed | any)* paren-end ;
 param-typed : ident-decl-param? ident-storage-type ;
 
 # TODO support `table`, `setof` and possibly more.
-fn-return   : kw['returns'] (kw['trigger'] | ident-storage-type) ;
+fn-return : kw['returns'] (kw['trigger'] | ident-storage-type) ;
 
 # https://www.postgresql.org/docs/current/sql-createfunction.html
 fn-meta{meta.function.meta} :
