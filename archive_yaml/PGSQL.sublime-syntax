@@ -4,6 +4,7 @@ version: 2
 file_extensions: [pgsql, sql]
 extends: Packages/sublime-sql/PGSQL Common.sublime-syntax
 scope: source.pgsql
+hidden: true
 
 contexts:
   match-ident:

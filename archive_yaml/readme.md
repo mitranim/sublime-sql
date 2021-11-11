@@ -1,9 +1,12 @@
+**Note**: the SBNF implementation is considered "primary". The manual YAML implementation is archived for now. If you wish to use these syntaxes, remove the line `hidden: true` from these files.
+
 ## Overview
 
-Sublime Text syntax for Postgres SQL. Written in [SBNF](https://github.com/BenjaminSchaaf/sbnf):
+Sublime Text syntax definitions for SQL:
 
-  * Source file: `pgsql.sbnf`.
-  * Auto-generated syntax: `pgsql.sublime-syntax`.
+  * Built from scratch.
+  * Only Postgres dialect.
+  * Designed for extension via inheritance.
 
 Differences from the built-in SQL syntax and the PgSQL package available on Package Control:
 
@@ -13,6 +16,7 @@ Differences from the built-in SQL syntax and the PgSQL package available on Pack
 * Prefers to scope keywords as `keyword` rather than `storage` (may reconsider for some contexts).
 * Adheres more closely to ST scope conventions while respecting SQL semantics.
 * Supports ordinal parameters like `$1` and named parameters like `:ident`.
+* (Tentative) Comes with a syntax for the output of Postgres `explain` (PGSQL Explan).
 
 Current limitations:
 

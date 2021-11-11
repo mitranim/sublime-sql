@@ -1,0 +1,3429 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+version: 2
+name: pgsql
+scope: source.pgsql
+contexts:
+  # Rule: alter-table-action-add
+  alter-table-action-add|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-add|1
+    - match: '(?i)\b(?:column)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-add|4
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [declare-column|0, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-add
+  alter-table-action-add|1:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [alter-table-action-add|2, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-add|3, id@WydlbnRpdHkubmFtZS5jb25zdHJhaW50J10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.constraint.pgsql
+      set: alter-table-action-add|3
+    - match: '"[^"]*"'
+      scope: entity.name.constraint.pgsql
+      set: alter-table-action-add|3
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-add
+  alter-table-action-add|2:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-add|3, id@WydlbnRpdHkubmFtZS5jb25zdHJhaW50J10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.constraint.pgsql
+      set: alter-table-action-add|3
+    - match: '"[^"]*"'
+      scope: entity.name.constraint.pgsql
+      set: alter-table-action-add|3
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-add
+  alter-table-action-add|3:
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: [kw@Wyd2YWxpZCdd|meta, word@Wyd2YWxpZCdd|0]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: alter-table-action-add
+  alter-table-action-add|4:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [declare-column|0, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-add
+  alter-table-action-alter-column-add|0:
+    - match: '(?i)\b(?:generated)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-add|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-add
+  alter-table-action-alter-column-add|1:
+    - match: '(?i)\b(?:always)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-add|2
+    - match: '(?i)\b(?:by)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-add|3
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-add
+  alter-table-action-alter-column-add|2:
+    - match: '(?i)\b(?:as)\b'
+      scope: keyword.pgsql
+      set: [kw@WydpZGVudGl0eSdd|meta, word@WydpZGVudGl0eSdd|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-add
+  alter-table-action-alter-column-add|3:
+    - match: '(?i)\b(?:default)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-add|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-drop
+  alter-table-action-alter-column-drop|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:default)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: [kw@WydudWxsJ10|meta, word@WydudWxsJ10|0]
+    - match: '(?i)\b(?:expression)\b'
+      scope: keyword.pgsql
+      set: if-exists|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column-set
+  alter-table-action-alter-column-set|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:data)\b'
+      scope: keyword.pgsql
+      set: type-using|0
+    - match: '(?i)\b(?:default)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: [kw@WydudWxsJ10|meta, word@WydudWxsJ10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter-column
+  alter-table-action-alter-column|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:add)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-add|0
+    - match: '(?i)\b(?:set)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-set|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter-column-drop|0
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: type-using|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|1
+    - match: '(?i)\b(?:column)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|5
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-alter-column|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter-column|0
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter-column|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-alter|2, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter|2
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|2:
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|3
+    - match: '(?i)\b(?:deferrable)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|4
+    - match: '(?i)\b(?:initially)\b'
+      scope: keyword.pgsql
+      set: [kw@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|meta, word@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|0]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|3:
+    - match: '(?i)\b(?:deferrable)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|4
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|4:
+    - match: '(?i)\b(?:initially)\b'
+      scope: keyword.pgsql
+      set: [kw@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|meta, word@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|0]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: alter-table-action-alter
+  alter-table-action-alter|5:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-alter-column|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter-column|0
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-alter-column|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-drop
+  alter-table-action-drop|0:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      set: alter-table-action-drop|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-drop
+  alter-table-action-drop|1:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [alter-table-action-drop|2, kw@WydleGlzdHMnXQ|meta, word@WydleGlzdHMnXQ|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0]
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-drop
+  alter-table-action-drop|2:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0]
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: [kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta, word@WydyZXN0cmljdHxjYXNjYWRlJ10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-rename
+  alter-table-action-rename|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:to)\b'
+      scope: keyword.pgsql
+      set: ident-decl-table|0
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-rename|1
+    - match: '(?i)\b(?:column)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-rename|3
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-rename|4, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|4
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|4
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-rename
+  alter-table-action-rename|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-rename|2, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|2
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-rename
+  alter-table-action-rename|2:
+    - match: '(?i)\b(?:to)\b'
+      scope: keyword.pgsql
+      set: ident-decl-constraint|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-rename
+  alter-table-action-rename|3:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table-action-rename|4, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|4
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: alter-table-action-rename|4
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action-rename
+  alter-table-action-rename|4:
+    - match: '(?i)\b(?:to)\b'
+      scope: keyword.pgsql
+      set: ident-decl-column|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table-action
+  alter-table-action|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:add)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-add|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-drop|0
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-alter|0
+    - match: '(?i)\b(?:rename)\b'
+      scope: keyword.pgsql
+      set: alter-table-action-rename|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table
+  alter-table|0:
+    - meta_content_scope: meta.alter.table.pgsql
+    - match: '(?i)\b(?:if)\b'
+      scope: meta.alter.table.pgsql keyword.pgsql
+      set: [alter-table|1, kw@WydleGlzdHMnXQ|meta, word@WydleGlzdHMnXQ|0]
+    - match: '(?i)\b(?:only)\b'
+      scope: meta.alter.table.pgsql keyword.pgsql
+      set: alter-table|2
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.alter.table.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table|meta, alter-table-action|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '"[^"]*"'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table
+  alter-table|1:
+    - meta_content_scope: meta.alter.table.pgsql
+    - match: '(?i)\b(?:only)\b'
+      scope: meta.alter.table.pgsql keyword.pgsql
+      set: alter-table|2
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.alter.table.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table|meta, alter-table-action|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '"[^"]*"'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: alter-table
+  alter-table|2:
+    - meta_content_scope: meta.alter.table.pgsql
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.alter.table.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [alter-table|meta, alter-table-action|0, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '"[^"]*"'
+      scope: meta.alter.table.pgsql variable.other.pgsql
+      set: [alter-table|meta, alter-table-action|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Meta scope context for alter-table
+  alter-table|meta:
+    - meta_content_scope: meta.alter.table.pgsql
+    - match: ''
+      pop: true
+  # Rule: alter
+  alter|0:
+    - match: '(?i)\b(?:table)\b'
+      scope: meta.alter.table.pgsql keyword.pgsql
+      set: alter-table|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: atom
+  atom|0:
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+      pop: true
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      pop: true
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      set: string-single|0
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: braces
+  braces|0:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - include: include!braces@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!braces@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+    - match: '\}'
+      scope: punctuation.section.braces.end.pgsql
+      pop: true
+    - match: '(?=\S)'
+      set: braces|5
+  # Rule: braces
+  #  For branch point 'braces@1'
+  braces|1|braces@1:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: braces@1
+  # Rule: braces
+  #  For branch point 'braces@1'
+  braces|2|braces@1:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: braces@1
+  # Rule: braces
+  #  For branch point 'braces@2'
+  braces|3|braces@2:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: braces@2
+  # Rule: braces
+  #  For branch point 'braces@2'
+  braces|4|braces@2:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: braces
+  braces|5:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+      set: braces|0
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      set: braces|0
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+      set: braces|0
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: [braces|0, parens|0]
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      set: [braces|0, brackets|0]
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      set: [braces|0, braces|0]
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+      set: braces|0
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      set: braces|0
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      set: [braces|0, string-single|0]
+    - match: '::'
+      scope: keyword.operator.pgsql
+      set: [braces|0, ident-storage-type|0]
+    - include: include!braces@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      set: braces|0
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+      set: braces|0
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+      set: braces|0
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      set: braces|0
+    - include: include!braces@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      set: [braces|0, alter|0]
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      set: [braces|0, if-exists|0]
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      set: [braces|0, is|0]
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      set: [braces|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      set: [braces|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+      set: braces|0
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+      set: braces|0
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: braces|0
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: braces|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: braces|0
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: braces|0
+  # Rule: brackets
+  brackets|0:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - include: include!brackets@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!brackets@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+    - match: '\]'
+      scope: punctuation.section.brackets.end.pgsql
+      pop: true
+    - match: '(?=\S)'
+      set: brackets|5
+  # Rule: brackets
+  #  For branch point 'brackets@1'
+  brackets|1|brackets@1:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: brackets@1
+  # Rule: brackets
+  #  For branch point 'brackets@1'
+  brackets|2|brackets@1:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: brackets@1
+  # Rule: brackets
+  #  For branch point 'brackets@2'
+  brackets|3|brackets@2:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: brackets@2
+  # Rule: brackets
+  #  For branch point 'brackets@2'
+  brackets|4|brackets@2:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: brackets
+  brackets|5:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+      set: brackets|0
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      set: brackets|0
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+      set: brackets|0
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: [brackets|0, parens|0]
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      set: [brackets|0, brackets|0]
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      set: [brackets|0, braces|0]
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+      set: brackets|0
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      set: brackets|0
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      set: [brackets|0, string-single|0]
+    - match: '::'
+      scope: keyword.operator.pgsql
+      set: [brackets|0, ident-storage-type|0]
+    - include: include!brackets@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      set: brackets|0
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+      set: brackets|0
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+      set: brackets|0
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      set: brackets|0
+    - include: include!brackets@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, alter|0]
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, if-exists|0]
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, is|0]
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+      set: brackets|0
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+      set: brackets|0
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: brackets|0
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: brackets|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: brackets|0
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: brackets|0
+  comma|0|create-table@1:
+    - meta_include_prototype: false
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      push: create-table|5|create-table@1
+      pop: true
+  comma|1|create-table@1:
+    - meta_include_prototype: false
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      push: create-table|6|create-table@1
+      pop: true
+  comma|2|create-table@1:
+    - meta_include_prototype: false
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      pop: true
+  # Rule: comment-block
+  comment-block|0:
+    - meta_content_scope: comment.block.pgsql
+    - match: '/\*'
+      scope: comment.block.pgsql comment.block.pgsql punctuation.definition.comment.begin.pgsql
+      push: [comment-block|meta, comment-block|0]
+    - match: '\*/'
+      scope: comment.block.pgsql punctuation.definition.comment.end.pgsql
+      pop: true
+  # Meta scope context for comment-block
+  comment-block|meta:
+    - meta_content_scope: comment.block.pgsql
+    - match: ''
+      pop: true
+  # Rule: comment-line
+  comment-line|0:
+    - meta_content_scope: comment.line.pgsql
+    - match: '\n'
+      scope: comment.line.pgsql
+      pop: true
+  # Rule: constraint
+  constraint|0:
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: ident-decl-constraint|0
+    - match: '(?=\S)'
+      pop: true
+  # Rule: create-domain
+  create-domain|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-domain|1, id@WydlbnRpdHkubmFtZS50eXBlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.pgsql
+      set: create-domain|1
+    - match: '"[^"]*"'
+      scope: entity.name.type.pgsql
+      set: create-domain|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-domain
+  create-domain|1:
+    - match: '(?i)\b(?:as)\b'
+      scope: keyword.pgsql
+      set: create-domain|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-domain
+  create-domain|2:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [constraint|0, type|0]
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [constraint|0, type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      set: constraint|0
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      set: constraint|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-function
+  create-function|0:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [create-function|1, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-function|2, id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.function.pgsql
+      set: create-function|2
+    - match: '"[^"]*"'
+      scope: entity.name.function.pgsql
+      set: create-function|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-function
+  create-function|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-function|2, id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.function.pgsql
+      set: create-function|2
+    - match: '"[^"]*"'
+      scope: entity.name.function.pgsql
+      set: create-function|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-function
+  create-function|2:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: [create-function|3, fn-params|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-function
+  create-function|3:
+    - match: '(?i)\b(?:returns)\b'
+      scope: keyword.pgsql
+      set: [create-function|4, fn-return|0]
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      scope: meta.function.meta.pgsql
+      set: create-function|4
+    - match: '(?i)\b(?:window|immutable|stable|parallel|unsafe|restricted|safe|volatile|strict|external)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: create-function|4
+    - match: '(?i)\b(?:language)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, ident-kw|0]
+    - match: '(?i)\b(?:transform)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|0]
+    - match: '(?i)\b(?:not)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, kw@WydsZWFrcHJvb2YnXQ|meta, word@WydsZWFrcHJvb2YnXQ|0]
+    - match: '(?i)\b(?:leakproof)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: create-function|4
+    - match: '(?i)\b(?:security)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, kw@WydpbnZva2VyfGRlZmluZXInXQ|meta, word@WydpbnZva2VyfGRlZmluZXInXQ|0]
+    - match: '(?i)\b(?:cost)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, number|0]
+    - match: '(?i)\b(?:rows)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, number|0]
+    - match: '(?i)\b(?:support)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|meta, ident-other|0]
+    - match: '(?i)\b(?:set)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [create-function|4, fn-meta|4]
+    - match: '(?i)\b(?:as|return)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-function
+  create-function|4:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      scope: meta.function.meta.pgsql
+    - match: '(?i)\b(?:window|immutable|stable|parallel|unsafe|restricted|safe|volatile|strict|external)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+    - match: '(?i)\b(?:language)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, ident-kw|0]
+    - match: '(?i)\b(?:transform)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: fn-meta|0
+    - match: '(?i)\b(?:not)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, kw@WydsZWFrcHJvb2YnXQ|meta, word@WydsZWFrcHJvb2YnXQ|0]
+    - match: '(?i)\b(?:leakproof)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+    - match: '(?i)\b(?:security)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, kw@WydpbnZva2VyfGRlZmluZXInXQ|meta, word@WydpbnZva2VyfGRlZmluZXInXQ|0]
+    - match: '(?i)\b(?:cost)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, number|0]
+    - match: '(?i)\b(?:rows)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, number|0]
+    - match: '(?i)\b(?:support)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: [fn-meta|meta, ident-other|0]
+    - match: '(?i)\b(?:set)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      push: fn-meta|4
+    - match: '(?i)\b(?:as|return)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-index
+  create-index|0:
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-index
+  create-index|1:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [ident-decl-index|0, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5pbmRleCdd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.index.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.index.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-schema
+  create-schema|0:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [ident-decl-schema|0, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5zY2hlbWEnXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.schema.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.schema.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|0:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [create-table|1, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-table|2, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.table.pgsql
+      set: create-table|2
+    - match: '"[^"]*"'
+      scope: entity.name.type.table.pgsql
+      set: create-table|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-table|2, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.table.pgsql
+      set: create-table|2
+    - match: '"[^"]*"'
+      scope: entity.name.type.table.pgsql
+      set: create-table|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  #  For branch point 'create-table@3'
+  create-table|10|create-table@3:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  #  For branch point 'create-table@1'
+  create-table|11|create-table@1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: type|0
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|2:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: create-table|3
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|3:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-table|4, ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      set: [create-table|4, ident-storage-type|1]
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      set: [create-table|4, ident-storage-type|1]
+    - match: '\)'
+      scope: punctuation.section.parens.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|4:
+    - include: include!create-table@1
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      push: ident-decl-constraint|0
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - include: include!create-table@2
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!create-table@3
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+    - match: '\)'
+      scope: punctuation.section.parens.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  #  For branch point 'create-table@1'
+  create-table|5|create-table@1:
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: ident-decl-constraint|0
+    - match: '\S'
+      fail: create-table@1
+  # Rule: create-table
+  #  For branch point 'create-table@1'
+  create-table|6|create-table@1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      push: create-table|11|create-table@1
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      push: create-table|11|create-table@1
+      pop: true
+    - match: '\S'
+      fail: create-table@1
+  # Rule: create-table
+  #  For branch point 'create-table@2'
+  create-table|7|create-table@2:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: create-table@2
+  # Rule: create-table
+  #  For branch point 'create-table@2'
+  create-table|8|create-table@2:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: create-table@2
+  # Rule: create-table
+  #  For branch point 'create-table@3'
+  create-table|9|create-table@3:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: create-table@3
+  # Rule: create-trigger
+  create-trigger|0:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [create-trigger|1, if-not-exists|0]
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-trigger|2, id@WydlbnRpdHkubmFtZS50cmlnZ2VyJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.trigger.pgsql
+      set: create-trigger|2
+    - match: '"[^"]*"'
+      scope: entity.name.trigger.pgsql
+      set: create-trigger|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-trigger
+  create-trigger|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-trigger|2, id@WydlbnRpdHkubmFtZS50cmlnZ2VyJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.trigger.pgsql
+      set: create-trigger|2
+    - match: '"[^"]*"'
+      scope: entity.name.trigger.pgsql
+      set: create-trigger|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-trigger
+  create-trigger|2:
+    - match: '(?i)\b(?:after|before|or|insert|update|delete)\b'
+      scope: keyword.pgsql
+      set: create-trigger|3
+    - match: '(?i)\b(?:on)\b'
+      scope: keyword.pgsql
+      set: create-trigger|4
+    - match: '(?=\S)'
+      pop: true
+  # Rule: create-trigger
+  create-trigger|3:
+    - match: '(?i)\b(?:after|before|or|insert|update|delete)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:on)\b'
+      scope: keyword.pgsql
+      set: create-trigger|4
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-trigger
+  create-trigger|4:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-trigger|5, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: create-trigger|5
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: create-trigger|5
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-trigger
+  create-trigger|5:
+    - match: '(?i)\b(?:for|each|row|statement|execute)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:procedure)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-type
+  create-type|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-type|1, id@WydlbnRpdHkubmFtZS50eXBlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.pgsql
+      set: create-type|1
+    - match: '"[^"]*"'
+      scope: entity.name.type.pgsql
+      set: create-type|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-type
+  create-type|1:
+    - match: '(?i)\b(?:as)\b'
+      scope: keyword.pgsql
+      set: [kw@WydlbnVtJ10|meta, word@WydlbnVtJ10|0]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: create-view
+  create-view|0:
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create
+  create|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: declare-column
+  declare-column|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      set: ident-storage-type|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-meta
+  fn-meta|0:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(?i)\b(?:for)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: fn-meta|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-meta
+  fn-meta|1:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(?i)\b(?:type)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: fn-meta|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-meta
+  fn-meta|2:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.function.meta.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [fn-meta|3, type|0]
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+      set: [fn-meta|3, type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+      set: fn-meta|3
+    - match: '"[^"]*"'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+      set: fn-meta|3
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-meta
+  fn-meta|3:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.function.meta.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: [fn-meta|meta, type|0]
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+      push: [fn-meta|meta, type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+    - match: '"[^"]*"'
+      scope: meta.function.meta.pgsql storage.type.pgsql
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-meta
+  fn-meta|4:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      scope: meta.function.meta.pgsql
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [fn-meta|5, id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: meta.function.meta.pgsql variable.other.pgsql
+      set: fn-meta|5
+    - match: '"[^"]*"'
+      scope: meta.function.meta.pgsql variable.other.pgsql
+      set: fn-meta|5
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-meta
+  fn-meta|5:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: '(?i)\b(?:to)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [fn-meta|meta, atom|0]
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: meta.function.meta.pgsql keyword.operator.pgsql
+      set: [fn-meta|meta, atom|0]
+    - match: '(?i)\b(?:from)\b'
+      scope: meta.function.meta.pgsql keyword.pgsql
+      set: [fn-meta|meta, kw@WydjdXJyZW50J10|meta, word@WydjdXJyZW50J10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Meta scope context for fn-meta
+  fn-meta|meta:
+    - meta_content_scope: meta.function.meta.pgsql
+    - match: ''
+      pop: true
+  # Rule: fn-params
+  fn-params|0:
+    - include: include!fn-params@1
+    - include: include!fn-params@2
+    - include: include!fn-params@3
+    - include: include!fn-params@4
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: [type|meta, type-char|0]
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!fn-params@5
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\)'
+      scope: punctuation.section.parens.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|10|fn-params@2:
+    - match: '\('
+      scope: storage.type.pgsql punctuation.section.parens.begin.pgsql
+      set: [type|meta, type-char|1]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|1|fn-params@2:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.pgsql
+      push: fn-params|9|fn-params@2
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.parameter.pgsql
+      push: fn-params|9|fn-params@2
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|2|fn-params@2:
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|10|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|3|fn-params@2:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|4|fn-params@2:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@3'
+  fn-params|5|fn-params@3:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|2|fn-params@2
+      pop: true
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|10|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@3
+  # Rule: fn-params
+  #  For branch point 'fn-params@4'
+  fn-params|6|fn-params@4:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|2|fn-params@2
+      pop: true
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|10|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@4
+  # Rule: fn-params
+  #  For branch point 'fn-params@5'
+  fn-params|7|fn-params@5:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: fn-params@5
+  # Rule: fn-params
+  #  For branch point 'fn-params@5'
+  fn-params|8|fn-params@5:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|9|fn-params@2:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: type|0
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-return
+  fn-return|0:
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: type|0
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Meta scope context for id['variable.other.member.declaration']
+  id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta:
+    - meta_content_scope: variable.other.member.declaration.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['variable.other']
+  id@Wyd2YXJpYWJsZS5vdGhlcidd|meta:
+    - meta_content_scope: variable.other.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.trigger']
+  id@WydlbnRpdHkubmFtZS50cmlnZ2VyJ10|meta:
+    - meta_content_scope: entity.name.trigger.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.type']
+  id@WydlbnRpdHkubmFtZS50eXBlJ10|meta:
+    - meta_content_scope: entity.name.type.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.type.table']
+  id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta:
+    - meta_content_scope: entity.name.type.table.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.view']
+  id@WydlbnRpdHkubmFtZS52aWV3J10|meta:
+    - meta_content_scope: entity.name.view.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.constraint']
+  id@WydlbnRpdHkubmFtZS5jb25zdHJhaW50J10|meta:
+    - meta_content_scope: entity.name.constraint.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.function']
+  id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta:
+    - meta_content_scope: entity.name.function.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.index']
+  id@WydlbnRpdHkubmFtZS5pbmRleCdd|meta:
+    - meta_content_scope: entity.name.index.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for id['entity.name.schema']
+  id@WydlbnRpdHkubmFtZS5zY2hlbWEnXQ|meta:
+    - meta_content_scope: entity.name.schema.pgsql
+    - match: ''
+      pop: true
+  # Rule: ident-decl-column
+  ident-decl-column|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.member.declaration.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.member.declaration.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-constraint
+  ident-decl-constraint|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5jb25zdHJhaW50J10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.constraint.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.constraint.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-index
+  ident-decl-index|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5pbmRleCdd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.index.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.index.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-schema
+  ident-decl-schema|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5zY2hlbWEnXQ|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.schema.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.schema.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-table
+  ident-decl-table|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.table.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.type.table.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-view
+  ident-decl-view|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS52aWV3J10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.view.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.view.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-kw
+  ident-kw|0:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|0|braces@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: braces|1|braces@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|10|parens@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: parens|1|parens@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|11|parens@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: parens|2|parens@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|12|main@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: main|0|main@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|13|main@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: main|1|main@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|1|braces@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: braces|2|braces@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|2|create-table@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: create-table|7|create-table@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|3|create-table@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: create-table|8|create-table@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|4|fn-params@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|1|fn-params@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|5|fn-params@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|2|fn-params@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|6|fn-params@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|3|fn-params@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|7|fn-params@2:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|4|fn-params@2
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|8|brackets@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: brackets|1|brackets@1
+      pop: true
+  ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|9|brackets@1:
+    - meta_include_prototype: false
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: brackets|2|brackets@1
+      pop: true
+  # Rule: ident-other
+  ident-other|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@Wyd2YXJpYWJsZS5vdGhlcidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-storage-type
+  ident-storage-type|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: type|0
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+  # Rule: ident-storage-type
+  ident-storage-type|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: type|0
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident
+  ident|0:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      pop: true
+    - match: '"[^"]*"'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  ident|1|fn-params@3:
+    - meta_include_prototype: false
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.pgsql
+      push: fn-params|5|fn-params@3
+      pop: true
+  ident|2|fn-params@3:
+    - meta_include_prototype: false
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+  ident|3|fn-params@3:
+    - meta_include_prototype: false
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+  ident|4|fn-params@4:
+    - meta_include_prototype: false
+    - match: '"[^"]*"'
+      scope: variable.parameter.pgsql
+      push: fn-params|6|fn-params@4
+      pop: true
+  ident|5|fn-params@4:
+    - meta_include_prototype: false
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+  ident|6|fn-params@4:
+    - meta_include_prototype: false
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+  # Rule: if-exists
+  if-exists|0:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [kw@WydleGlzdHMnXQ|meta, word@WydleGlzdHMnXQ|0]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: if-not-exists
+  if-not-exists|0:
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: [kw@WydleGlzdHMnXQ|meta, word@WydleGlzdHMnXQ|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: if-not-exists
+  if-not-exists|1:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|0
+    - match: '(?=\S)'
+      pop: true
+  # Include context for branch point braces@1
+  include!braces@1:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: braces@1
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|0|braces@1
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|1|braces@1
+  # Include context for branch point braces@2
+  include!braces@2:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: braces@2
+      branch:
+        - word@WydjcmVhdGUnXQ|0|braces@2
+        - word@WydjcmVhdGUnXQ|1|braces@2
+  # Include context for branch point brackets@1
+  include!brackets@1:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: brackets@1
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|8|brackets@1
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|9|brackets@1
+  # Include context for branch point brackets@2
+  include!brackets@2:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: brackets@2
+      branch:
+        - word@WydjcmVhdGUnXQ|6|brackets@2
+        - word@WydjcmVhdGUnXQ|7|brackets@2
+  # Include context for branch point create-table@1
+  include!create-table@1:
+    - match: '(?=,)'
+      branch_point: create-table@1
+      branch:
+        - comma|0|create-table@1
+        - comma|1|create-table@1
+        - comma|2|create-table@1
+  # Include context for branch point create-table@2
+  include!create-table@2:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: create-table@2
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|2|create-table@2
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|3|create-table@2
+  # Include context for branch point create-table@3
+  include!create-table@3:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: create-table@3
+      branch:
+        - word@WydjcmVhdGUnXQ|2|create-table@3
+        - word@WydjcmVhdGUnXQ|3|create-table@3
+  # Include context for branch point fn-params@1
+  include!fn-params@1:
+    - match: '(?=(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b)'
+      branch_point: fn-params@1
+      branch:
+        - word@WydhbGx8YW5hbHlzZXxhbmFseXplfGFuZHxhbnl8YXJyYXl8YXN8YXNjfGFzeW1tZXRyaWN8Ym90aHxjYXNlfGNhc3R8Y2hlY2t8Y29sbGF0ZXxjb2x1bW58Y29uc3RyYWludHxjcmVhdGV8Y3VycmVudF9jYXRhbG9nfGN1cnJlbnRfZGF0ZXxjdXJyZW50X3JvbGV8Y3VycmVudF90aW1lfGN1cnJlbnRfdGltZXN0YW1wfGN1cnJlbnRfdXNlcnxkZWZhdWx0fGRlZmVycmFibGV8ZGVzY3xkaXN0aW5jdHxkb3xlbHNlfGVuZHxleGNlcHR8ZmFsc2V8ZmV0Y2h8Zm9yfGZvcmVpZ258ZnJvbXxncmFudHxncm91cHxoYXZpbmd8aW58aW5pdGlhbGx5fGludGVyc2VjdHxpbnRvfGxhdGVyYWx8bGVhZGluZ3xsaW1pdHxsb2NhbHRpbWV8bG9jYWx0aW1lc3RhbXB8bm90fG51bGx8b2Zmc2V0fG9ufG9ubHl8b3J8b3JkZXJ8cGxhY2luZ3xwcmltYXJ5fHJlZmVyZW5jZXN8cmV0dXJuaW5nfHNlbGVjdHxzZXNzaW9uX3VzZXJ8c29tZXxzeW1tZXRyaWN8dGFibGV8dGhlbnx0b3x0cmFpbGluZ3x0cnVlfHVuaW9ufHVuaXF1ZXx1c2VyfHVzaW5nfHZhcmlhZGljfHdoZW58d2hlcmV8d2luZG93fHdpdGgnXQ|0|fn-params@1
+        - word@WydhbGx8YW5hbHlzZXxhbmFseXplfGFuZHxhbnl8YXJyYXl8YXN8YXNjfGFzeW1tZXRyaWN8Ym90aHxjYXNlfGNhc3R8Y2hlY2t8Y29sbGF0ZXxjb2x1bW58Y29uc3RyYWludHxjcmVhdGV8Y3VycmVudF9jYXRhbG9nfGN1cnJlbnRfZGF0ZXxjdXJyZW50X3JvbGV8Y3VycmVudF90aW1lfGN1cnJlbnRfdGltZXN0YW1wfGN1cnJlbnRfdXNlcnxkZWZhdWx0fGRlZmVycmFibGV8ZGVzY3xkaXN0aW5jdHxkb3xlbHNlfGVuZHxleGNlcHR8ZmFsc2V8ZmV0Y2h8Zm9yfGZvcmVpZ258ZnJvbXxncmFudHxncm91cHxoYXZpbmd8aW58aW5pdGlhbGx5fGludGVyc2VjdHxpbnRvfGxhdGVyYWx8bGVhZGluZ3xsaW1pdHxsb2NhbHRpbWV8bG9jYWx0aW1lc3RhbXB8bm90fG51bGx8b2Zmc2V0fG9ufG9ubHl8b3J8b3JkZXJ8cGxhY2luZ3xwcmltYXJ5fHJlZmVyZW5jZXN8cmV0dXJuaW5nfHNlbGVjdHxzZXNzaW9uX3VzZXJ8c29tZXxzeW1tZXRyaWN8dGFibGV8dGhlbnx0b3x0cmFpbGluZ3x0cnVlfHVuaW9ufHVuaXF1ZXx1c2VyfHVzaW5nfHZhcmlhZGljfHdoZW58d2hlcmV8d2luZG93fHdpdGgnXQ|1|fn-params@1
+  # Include context for branch point fn-params@2
+  include!fn-params@2:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: fn-params@2
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|4|fn-params@2
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|5|fn-params@2
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|6|fn-params@2
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|7|fn-params@2
+  # Include context for branch point fn-params@3
+  include!fn-params@3:
+    - match: '(?=\b[[:alpha:]_][[:alnum:]_]*\b)'
+      branch_point: fn-params@3
+      branch:
+        - ident|1|fn-params@3
+        - ident|2|fn-params@3
+        - ident|3|fn-params@3
+  # Include context for branch point fn-params@4
+  include!fn-params@4:
+    - match: '(?="[^"]*")'
+      branch_point: fn-params@4
+      branch:
+        - ident|4|fn-params@4
+        - ident|5|fn-params@4
+        - ident|6|fn-params@4
+  # Include context for branch point fn-params@5
+  include!fn-params@5:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: fn-params@5
+      branch:
+        - word@WydjcmVhdGUnXQ|4|fn-params@5
+        - word@WydjcmVhdGUnXQ|5|fn-params@5
+  # Include context for branch point main@1
+  include!main@1:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: main@1
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|12|main@1
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|13|main@1
+  # Include context for branch point main@2
+  include!main@2:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: main@2
+      branch:
+        - word@WydjcmVhdGUnXQ|10|main@2
+        - word@WydjcmVhdGUnXQ|11|main@2
+  # Include context for branch point parens@1
+  include!parens@1:
+    - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
+      branch_point: parens@1
+      branch:
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|10|parens@1
+        - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|11|parens@1
+  # Include context for branch point parens@2
+  include!parens@2:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: parens@2
+      branch:
+        - word@WydjcmVhdGUnXQ|8|parens@2
+        - word@WydjcmVhdGUnXQ|9|parens@2
+  # Rule: is
+  is|0:
+    - match: '(?i)\b(?:not)\b'
+      scope: keyword.pgsql
+      set: is|1
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+      pop: true
+    - match: '(?i)\b(?:null)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:unknown)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:distinct)\b'
+      scope: keyword.pgsql
+      set: [kw@Wydmcm9tJ10|meta, word@Wydmcm9tJ10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: is
+  is|1:
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+      pop: true
+    - match: '(?i)\b(?:null)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:unknown)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:distinct)\b'
+      scope: keyword.pgsql
+      set: [kw@Wydmcm9tJ10|meta, word@Wydmcm9tJ10|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Meta scope context for kw['using']
+  kw@Wyd1c2luZydd|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['valid']
+  kw@Wyd2YWxpZCdd|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['by']
+  kw@WydieSdd|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['current']
+  kw@WydjdXJyZW50J10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['deferred|immediate']
+  kw@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['enum']
+  kw@WydlbnVtJ10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['exists']
+  kw@WydleGlzdHMnXQ|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['from']
+  kw@Wydmcm9tJ10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['identity']
+  kw@WydpZGVudGl0eSdd|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['invoker|definer']
+  kw@WydpbnZva2VyfGRlZmluZXInXQ|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['leakproof']
+  kw@WydsZWFrcHJvb2YnXQ|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['null']
+  kw@WydudWxsJ10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['replace']
+  kw@WydyZXBsYWNlJ10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['restrict|cascade']
+  kw@WydyZXN0cmljdHxjYXNjYWRlJ10|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Rule: main
+  main:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - include: include!main@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!main@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+  # Rule: main
+  #  For branch point 'main@1'
+  main|0|main@1:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: main@1
+  # Rule: main
+  #  For branch point 'main@1'
+  main|1|main@1:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: main@1
+  # Rule: main
+  #  For branch point 'main@2'
+  main|2|main@2:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: main@2
+  # Rule: main
+  #  For branch point 'main@2'
+  main|3|main@2:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: number
+  number|0:
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+      pop: true
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: paren-end
+  paren-end|0:
+    - match: '\)'
+      scope: punctuation.section.parens.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: parens
+  parens|0:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      push: parens|0
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: brackets|0
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      push: braces|0
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      push: string-single|0
+    - match: '::'
+      scope: keyword.operator.pgsql
+      push: ident-storage-type|0
+    - include: include!parens@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+    - include: include!parens@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      push: alter|0
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      push: if-exists|0
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      push: is|0
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      push: [kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+    - match: '\)'
+      scope: punctuation.section.parens.end.pgsql
+      pop: true
+    - match: '(?=\S)'
+      set: parens|5
+  # Rule: parens
+  #  For branch point 'parens@1'
+  parens|1|parens@1:
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: parens@1
+  # Rule: parens
+  #  For branch point 'parens@1'
+  parens|2|parens@1:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: parens@1
+  # Rule: parens
+  #  For branch point 'parens@2'
+  parens|3|parens@2:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: parens@2
+  # Rule: parens
+  #  For branch point 'parens@2'
+  parens|4|parens@2:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|0
+    - match: '(?i)\b(?:trigger)\b'
+      scope: keyword.pgsql
+      set: create-trigger|0
+    - match: '(?i)\b(?:function)\b'
+      scope: keyword.pgsql
+      set: create-function|0
+    - match: '(?i)\b(?:unique)\b'
+      scope: keyword.pgsql
+      set: create-index|0
+    - match: '(?i)\b(?:index)\b'
+      scope: keyword.pgsql
+      set: create-index|1
+    - match: '(?i)\b(?:materialized|recursive)\b'
+      scope: keyword.pgsql
+      set: create-view|0
+    - match: '(?i)\b(?:view)\b'
+      scope: keyword.pgsql
+      set: ident-decl-view|0
+    - match: '(?i)\b(?:schema)\b'
+      scope: keyword.pgsql
+      set: create-schema|0
+    - match: '(?i)\b(?:extension)\b'
+      scope: keyword.pgsql
+      set: if-not-exists|1
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: create-type|0
+    - match: '(?i)\b(?:domain)\b'
+      scope: keyword.pgsql
+      set: create-domain|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: parens
+  parens|5:
+    - match: '\.'
+      scope: punctuation.accessor.dot.pgsql
+      set: parens|0
+    - match: ','
+      scope: punctuation.separator.sequence.pgsql
+      set: parens|0
+    - match: ';'
+      scope: punctuation.terminator.pgsql
+      set: parens|0
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: [parens|0, parens|0]
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      set: [parens|0, brackets|0]
+    - match: '\{'
+      scope: punctuation.section.braces.begin.pgsql
+      set: [parens|0, braces|0]
+    - match: '\d+(\.)\d+'
+      scope: constant.numeric.pgsql
+      captures:
+        1: punctuation.separator.decimal.pgsql
+      set: parens|0
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      set: parens|0
+    - match: '(\b[Ee])?('')'
+      scope: string.single.pgsql
+      captures:
+        1: storage.modifier.pgsql
+        2: punctuation.definition.string.begin.pgsql
+      set: [parens|0, string-single|0]
+    - match: '::'
+      scope: keyword.operator.pgsql
+      set: [parens|0, ident-storage-type|0]
+    - include: include!parens@1
+    - match: '\*'
+      scope: keyword.operator.pgsql
+      set: parens|0
+    - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
+      scope: keyword.operator.pgsql
+      set: parens|0
+    - match: '(?i)\b(?:true|false)\b'
+      scope: constant.language.bool.pgsql
+      set: parens|0
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      set: parens|0
+    - include: include!parens@2
+    - match: '(?i)\b(?:alter)\b'
+      scope: keyword.pgsql
+      set: [parens|0, alter|0]
+    - match: '(?i)\b(?:drop)\b'
+      scope: keyword.pgsql
+      set: [parens|0, if-exists|0]
+    - match: '(?i)\b(?:is)\b'
+      scope: keyword.pgsql
+      set: [parens|0, is|0]
+    - match: '(?i)\b(?:order)\b'
+      scope: keyword.pgsql
+      set: [parens|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:group)\b'
+      scope: keyword.pgsql
+      set: [parens|0, kw@WydieSdd|meta, word@WydieSdd|0]
+    - match: '(?i)\b(?:commit|rollback)\b'
+      scope: keyword.pgsql
+      set: parens|0
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+      set: parens|0
+    - match: '(\$)\d+'
+      scope: variable.parameter.ordinal.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: parens|0
+    - match: '(?!<:)(:)\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.named.pgsql
+      captures:
+        1: punctuation.definition.variable.pgsql
+      set: parens|0
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      set: parens|0
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      set: parens|0
+  # Rule: prototype
+  prototype:
+    - match: '--'
+      scope: comment.line.pgsql punctuation.definition.comment.pgsql
+      push: comment-line|0
+    - match: '/\*'
+      scope: comment.block.pgsql punctuation.definition.comment.begin.pgsql
+      push: comment-block|0
+  # Rule: string-single
+  string-single|0:
+    - meta_content_scope: string.single.pgsql
+    - meta_include_prototype: false
+    - match: ''''
+      scope: string.single.pgsql punctuation.definition.string.end.pgsql
+      pop: true
+  # Rule: type-char
+  type-char|0:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: type-char|1
+    - match: '(?=\S)'
+      pop: true
+  # Rule: type-char
+  type-char|1:
+    - match: '\d+'
+      scope: constant.numeric.pgsql
+      set: paren-end|0
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: type-using
+  type-using|0:
+    - match: '(?i)\b(?:type)\b'
+      scope: keyword.pgsql
+      set: type-using|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: type-using
+  type-using|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, type|0]
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0]
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0]
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: type
+  type|0:
+    - meta_content_scope: storage.type.pgsql
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Meta scope context for type
+  type|meta:
+    - meta_content_scope: storage.type.pgsql
+    - match: ''
+      pop: true
+  # Rule: word['using']
+  word@Wyd1c2luZydd|0:
+    - match: '(?i)\b(?:using)\b'
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+  # Rule: word['valid']
+  word@Wyd2YWxpZCdd|0:
+    - match: '(?i)\b(?:valid)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  word@WydhbGx8YW5hbHlzZXxhbmFseXplfGFuZHxhbnl8YXJyYXl8YXN8YXNjfGFzeW1tZXRyaWN8Ym90aHxjYXNlfGNhc3R8Y2hlY2t8Y29sbGF0ZXxjb2x1bW58Y29uc3RyYWludHxjcmVhdGV8Y3VycmVudF9jYXRhbG9nfGN1cnJlbnRfZGF0ZXxjdXJyZW50X3JvbGV8Y3VycmVudF90aW1lfGN1cnJlbnRfdGltZXN0YW1wfGN1cnJlbnRfdXNlcnxkZWZhdWx0fGRlZmVycmFibGV8ZGVzY3xkaXN0aW5jdHxkb3xlbHNlfGVuZHxleGNlcHR8ZmFsc2V8ZmV0Y2h8Zm9yfGZvcmVpZ258ZnJvbXxncmFudHxncm91cHxoYXZpbmd8aW58aW5pdGlhbGx5fGludGVyc2VjdHxpbnRvfGxhdGVyYWx8bGVhZGluZ3xsaW1pdHxsb2NhbHRpbWV8bG9jYWx0aW1lc3RhbXB8bm90fG51bGx8b2Zmc2V0fG9ufG9ubHl8b3J8b3JkZXJ8cGxhY2luZ3xwcmltYXJ5fHJlZmVyZW5jZXN8cmV0dXJuaW5nfHNlbGVjdHxzZXNzaW9uX3VzZXJ8c29tZXxzeW1tZXRyaWN8dGFibGV8dGhlbnx0b3x0cmFpbGluZ3x0cnVlfHVuaW9ufHVuaXF1ZXx1c2VyfHVzaW5nfHZhcmlhZGljfHdoZW58d2hlcmV8d2luZG93fHdpdGgnXQ|0|fn-params@1:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+      pop: true
+  word@WydhbGx8YW5hbHlzZXxhbmFseXplfGFuZHxhbnl8YXJyYXl8YXN8YXNjfGFzeW1tZXRyaWN8Ym90aHxjYXNlfGNhc3R8Y2hlY2t8Y29sbGF0ZXxjb2x1bW58Y29uc3RyYWludHxjcmVhdGV8Y3VycmVudF9jYXRhbG9nfGN1cnJlbnRfZGF0ZXxjdXJyZW50X3JvbGV8Y3VycmVudF90aW1lfGN1cnJlbnRfdGltZXN0YW1wfGN1cnJlbnRfdXNlcnxkZWZhdWx0fGRlZmVycmFibGV8ZGVzY3xkaXN0aW5jdHxkb3xlbHNlfGVuZHxleGNlcHR8ZmFsc2V8ZmV0Y2h8Zm9yfGZvcmVpZ258ZnJvbXxncmFudHxncm91cHxoYXZpbmd8aW58aW5pdGlhbGx5fGludGVyc2VjdHxpbnRvfGxhdGVyYWx8bGVhZGluZ3xsaW1pdHxsb2NhbHRpbWV8bG9jYWx0aW1lc3RhbXB8bm90fG51bGx8b2Zmc2V0fG9ufG9ubHl8b3J8b3JkZXJ8cGxhY2luZ3xwcmltYXJ5fHJlZmVyZW5jZXN8cmV0dXJuaW5nfHNlbGVjdHxzZXNzaW9uX3VzZXJ8c29tZXxzeW1tZXRyaWN8dGFibGV8dGhlbnx0b3x0cmFpbGluZ3x0cnVlfHVuaW9ufHVuaXF1ZXx1c2VyfHVzaW5nfHZhcmlhZGljfHdoZW58d2hlcmV8d2luZG93fHdpdGgnXQ|1|fn-params@1:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
+      scope: keyword.reserved.pgsql
+      pop: true
+  # Rule: word['by']
+  word@WydieSdd|0:
+    - match: '(?i)\b(?:by)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  word@WydjcmVhdGUnXQ|0|braces@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: braces|3|braces@2
+      pop: true
+  word@WydjcmVhdGUnXQ|10|main@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: main|2|main@2
+      pop: true
+  word@WydjcmVhdGUnXQ|11|main@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: main|3|main@2
+      pop: true
+  word@WydjcmVhdGUnXQ|1|braces@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: braces|4|braces@2
+      pop: true
+  word@WydjcmVhdGUnXQ|2|create-table@3:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: create-table|9|create-table@3
+      pop: true
+  word@WydjcmVhdGUnXQ|3|create-table@3:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: create-table|10|create-table@3
+      pop: true
+  word@WydjcmVhdGUnXQ|4|fn-params@5:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: fn-params|7|fn-params@5
+      pop: true
+  word@WydjcmVhdGUnXQ|5|fn-params@5:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: fn-params|8|fn-params@5
+      pop: true
+  word@WydjcmVhdGUnXQ|6|brackets@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: brackets|3|brackets@2
+      pop: true
+  word@WydjcmVhdGUnXQ|7|brackets@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: brackets|4|brackets@2
+      pop: true
+  word@WydjcmVhdGUnXQ|8|parens@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: parens|3|parens@2
+      pop: true
+  word@WydjcmVhdGUnXQ|9|parens@2:
+    - meta_include_prototype: false
+    - match: '(?i)\b(?:create)\b'
+      scope: keyword.pgsql
+      push: parens|4|parens@2
+      pop: true
+  # Rule: word['current']
+  word@WydjdXJyZW50J10|0:
+    - match: '(?i)\b(?:current)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['deferred|immediate']
+  word@WydkZWZlcnJlZHxpbW1lZGlhdGUnXQ|0:
+    - match: '(?i)\b(?:deferred|immediate)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['enum']
+  word@WydlbnVtJ10|0:
+    - match: '(?i)\b(?:enum)\b'
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+  # Rule: word['exists']
+  word@WydleGlzdHMnXQ|0:
+    - match: '(?i)\b(?:exists)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['from']
+  word@Wydmcm9tJ10|0:
+    - match: '(?i)\b(?:from)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['identity']
+  word@WydpZGVudGl0eSdd|0:
+    - match: '(?i)\b(?:identity)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['invoker|definer']
+  word@WydpbnZva2VyfGRlZmluZXInXQ|0:
+    - match: '(?i)\b(?:invoker|definer)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['leakproof']
+  word@WydsZWFrcHJvb2YnXQ|0:
+    - match: '(?i)\b(?:leakproof)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['null']
+  word@WydudWxsJ10|0:
+    - match: '(?i)\b(?:null)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['replace']
+  word@WydyZXBsYWNlJ10|0:
+    - match: '(?i)\b(?:replace)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['restrict|cascade']
+  word@WydyZXN0cmljdHxjYXNjYWRlJ10|0:
+    - match: '(?i)\b(?:restrict|cascade)\b'
+      pop: true
+    - match: '(?=\S)'
+      pop: true
