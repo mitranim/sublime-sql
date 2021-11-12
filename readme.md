@@ -5,7 +5,7 @@ Sublime Text syntax for Postgres SQL. Written in [SBNF](https://github.com/Benja
   * Source file: `pgsql.sbnf`.
   * Auto-generated syntax: `pgsql.sublime-syntax`.
 
-Differences from the built-in SQL syntax and the PgSQL package available on Package Control:
+Differences from built-in "SQL" and Package Control packages "PgSQL" and "PostgreSQL Syntax Highlighting":
 
 * Detects keywords contextually. Only _reserved_ keywords are context-free. Other keywords are detected only where they're expected.
 * Detects types contextually, where types are expected, without relying on a whitelist of built-ins. There's no difference between pre-defined and user-defined types.

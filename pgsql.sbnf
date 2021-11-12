@@ -65,7 +65,10 @@ operator-any  : '[\*\/\<\>\=\~\!\@\#\%\^\&\|\`\?\+\-]+'{keyword.operator} ;
 param-ordinal : '(\$)\d+'{variable.parameter.ordinal, 1: punctuation.definition.variable} ;
 param-named   : '(?!<:)(:)#[IDENT]'{variable.parameter.named, 1: punctuation.definition.variable} ;
 
-bool{constant.language.bool}  : word['true|false'] ;
+bool{constant.language.bool} : word['true|false'] ;
+
+# https://www.postgresql.org/docs/current/sql-keywords-appendix.html
+# https://github.com/postgres/postgres/blob/master/src/include/parser/kwlist.h
 kw-reserved{keyword.reserved} : word['all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with'] ;
 
 # Non-reserved keywords which are common enough to be scoped non-contextually.
