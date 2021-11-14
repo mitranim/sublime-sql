@@ -4,7 +4,9 @@
   <key>scope</key>
   <string>
     source.sql entity.name,
-    source.pgsql entity.name
+    source.pgsql entity.name,
+    source.sql variable.other.member.declaration,
+    source.pgsql variable.other.member.declaration
   </string>
   <key>settings</key>
   <dict>
