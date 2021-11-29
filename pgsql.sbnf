@@ -7,7 +7,7 @@ comment     : comment-line | comment-block ;
 any         : punctuation | number | string | operator | identifier ;
 number      : number-float | number-int ;
 punctuation : dot | comma | semi | parens | brackets | braces ;
-operator    : operator-cast | operator-star | operator-any ;
+operator    : operator-cast | operator-star | operator-tilde | operator-any ;
 identifier  : keyword | param | ident-other ;
 keyword     : bool | kw-common | kw-reserved ;
 param       : param-ordinal | param-named ;
@@ -20,6 +20,10 @@ atom        : number | string | ident-other ;
 # purposes it's better to scope it like an identifier.
 IDENT        = '\b[[:alpha:]_][[:alnum:]_]*\b'
 IDENT_QUOTED = '"[^"]*"'
+OP_CHAR      = '\*\/\<\>\=\~\!\@\#\%\^\&\|\`\?\+\-'
+OP_BEGIN     = '(?!<[#[OP_CHAR]])'
+OP_END       = '(?=[^#[OP_CHAR]]|$)'
+OP_ANY       = '[#[OP_CHAR]]+'
 
 # Syntactic hack. Should never match real text.
 NONE = `dede961a7c944bdca31f56b82e486e05`
@@ -58,9 +62,11 @@ string-single{string.single, include-prototype: false} :
   ~`'`{punctuation.definition.string.end}
 ;
 
-operator-cast : `::`{keyword.operator} ident-storage-type? ;
-operator-star : ident-ns? `*`{keyword.operator} ;
-operator-any  : '[\*\/\<\>\=\~\!\@\#\%\^\&\|\`\?\+\-]+'{keyword.operator} ;
+op[pattern]    : '#[OP_BEGIN]#[pattern]#[OP_END]'{keyword.operator} ;
+operator-cast  : op[`::`] ident-storage-type? ;
+operator-star  : ident-ns? op[`*`] ;
+operator-tilde : op['~*|~|!~*|!~'] ; # TODO: followed by string scoped as regexp.
+operator-any   : OP_ANY{keyword.operator} ;
 
 param-ordinal : '(\$)\d+'{variable.parameter.ordinal, 1: punctuation.definition.variable} ;
 param-named   : '(?!<:)(:)#[IDENT]'{variable.parameter.named, 1: punctuation.definition.variable} ;

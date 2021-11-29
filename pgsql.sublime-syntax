@@ -576,11 +576,13 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
     - include: include!braces@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -627,7 +629,7 @@ contexts:
   # Rule: braces
   #  For branch point 'braces@1'
   braces|1|braces@1:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -729,11 +731,14 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       set: [braces|0, string-single|0]
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: [braces|0, ident-storage-type|0]
     - include: include!braces@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+      set: braces|0
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: braces|0
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
@@ -811,11 +816,13 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
     - include: include!brackets@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -862,7 +869,7 @@ contexts:
   # Rule: brackets
   #  For branch point 'brackets@1'
   brackets|1|brackets@1:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -964,11 +971,14 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       set: [brackets|0, string-single|0]
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: [brackets|0, ident-storage-type|0]
     - include: include!brackets@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+      set: brackets|0
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: brackets|0
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
@@ -1458,11 +1468,13 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
     - include: include!create-table@2
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -1538,7 +1550,7 @@ contexts:
   # Rule: create-table
   #  For branch point 'create-table@2'
   create-table|7|create-table@2:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -1880,10 +1892,12 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -1961,7 +1975,7 @@ contexts:
   # Rule: fn-params
   #  For branch point 'fn-params@2'
   fn-params|3|fn-params@2:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -2801,11 +2815,13 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
     - include: include!main@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -2847,7 +2863,7 @@ contexts:
   # Rule: main
   #  For branch point 'main@1'
   main|0|main@1:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -2965,11 +2981,13 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       push: string-single|0
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       push: ident-storage-type|0
     - include: include!parens@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
       scope: keyword.operator.pgsql
@@ -3016,7 +3034,7 @@ contexts:
   # Rule: parens
   #  For branch point 'parens@1'
   parens|1|parens@1:
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
     - match: '\S'
@@ -3118,11 +3136,14 @@ contexts:
         1: storage.modifier.pgsql
         2: punctuation.definition.string.begin.pgsql
       set: [parens|0, string-single|0]
-    - match: '::'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])::(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: [parens|0, ident-storage-type|0]
     - include: include!parens@1
-    - match: '\*'
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+      set: parens|0
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])~*|~|!~*|!~(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       set: parens|0
     - match: '[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]+'
