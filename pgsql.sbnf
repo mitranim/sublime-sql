@@ -86,7 +86,7 @@ kw-common :
   | is
   | order
   | group
-  | kw['commit|rollback']
+  | kw['commit|rollback|between']
 ;
 
 # https://www.postgresql.org/docs/current/sql-commands.html
@@ -116,7 +116,7 @@ create-table :
   if-not-exists?
   ident-decl-table
   paren-begin
-  (declare-column (comma constraint | comma declare-column | constraint | any)*)?
+  (declare-column (comma? constraint | comma declare-column | any)*)?
   paren-end
 ;
 
@@ -223,7 +223,11 @@ fn-params : paren-begin (kw-reserved | param-typed | any)* paren-end ;
 param-typed : ident-decl-param? ident-storage-type ;
 
 # TODO support `table`, `setof` and possibly more.
-fn-return : kw['returns'] (kw['trigger'] | ident-storage-type) ;
+fn-return : kw['returns'] (
+  NONE
+  | kw['trigger']
+  | kw['setof']? ident-storage-type
+) ;
 
 # https://www.postgresql.org/docs/current/sql-createfunction.html
 fn-meta{meta.function.meta} :
@@ -249,7 +253,7 @@ is :
 order : kw['order'] kw['by'] ;
 group : kw['group'] kw['by'] ;
 
-constraint : kw['constraint'] ident-decl-constraint ;
+constraint : kw['constraint'] ident-decl-constraint? ;
 
 # WTB better naming scheme for entity name rules.
 declare-column : ident-decl-column ident-storage-type ;

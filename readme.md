@@ -45,6 +45,7 @@ To find the packages directory on your system, use Sublime Text menu → Prefere
 * More contextual keywords.
 * PL/PGSQL.
 * Better support for types.
+* A million other Postgres-specific things.
 
 ## License
 

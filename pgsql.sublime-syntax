@@ -605,7 +605,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -765,7 +765,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [braces|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
       set: braces|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
@@ -845,7 +845,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -1005,7 +1005,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [brackets|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
       set: brackets|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
@@ -1068,7 +1068,7 @@ contexts:
   constraint|0:
     - match: '(?i)\b(?:constraint)\b'
       scope: keyword.pgsql
-      set: ident-decl-constraint|0
+      set: ident-decl-constraint|1
     - match: '(?=\S)'
       pop: true
   # Rule: create-domain
@@ -1442,7 +1442,7 @@ contexts:
     - include: include!create-table@1
     - match: '(?i)\b(?:constraint)\b'
       scope: keyword.pgsql
-      push: ident-decl-constraint|0
+      push: ident-decl-constraint|1
     - match: '\.'
       scope: punctuation.accessor.dot.pgsql
     - match: ';'
@@ -1497,7 +1497,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -1524,7 +1524,7 @@ contexts:
   create-table|5|create-table@1:
     - match: '(?i)\b(?:constraint)\b'
       scope: keyword.pgsql
-      set: ident-decl-constraint|0
+      set: ident-decl-constraint|1
     - match: '\S'
       fail: create-table@1
   # Rule: create-table
@@ -1920,7 +1920,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(\$)\d+'
       scope: variable.parameter.ordinal.pgsql
@@ -2112,9 +2112,14 @@ contexts:
       fail: fn-params@2
   # Rule: fn-return
   fn-return|0:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       pop: true
+    - match: '(?i)\b(?:setof)\b'
+      scope: keyword.pgsql
+      set: ident-storage-type|1
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
@@ -2219,6 +2224,23 @@ contexts:
       pop: true
     - match: '\S'
       scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-decl-constraint
+  ident-decl-constraint|1:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [id@WydlbnRpdHkubmFtZS5jb25zdHJhaW50J10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.constraint.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: entity.name.constraint.pgsql
+      pop: true
+    - match: '(?=\S)'
       pop: true
   # Rule: ident-decl-index
   ident-decl-index|0:
@@ -2844,7 +2866,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -3010,7 +3032,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -3170,7 +3192,7 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [parens|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback)\b'
+    - match: '(?i)\b(?:commit|rollback|between)\b'
       scope: keyword.pgsql
       set: parens|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
