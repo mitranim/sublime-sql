@@ -691,6 +691,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -931,6 +934,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -1070,6 +1076,24 @@ contexts:
       scope: keyword.pgsql
       set: ident-decl-constraint|1
     - match: '(?=\S)'
+      pop: true
+  # Rule: create-aggregate
+  create-aggregate|0:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [fn-params|11, id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.function.pgsql
+      set: fn-params|11
+    - match: '"[^"]*"'
+      scope: entity.name.function.pgsql
+      set: fn-params|11
+    - match: '\S'
+      scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-domain
   create-domain|0:
@@ -1380,6 +1404,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -1731,6 +1758,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -1945,6 +1975,13 @@ contexts:
     - match: '(?=\S)'
       pop: true
   # Rule: fn-params
+  fn-params|11:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: fn-params|0
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
   #  For branch point 'fn-params@2'
   fn-params|1|fn-params@2:
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
@@ -2083,6 +2120,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -2947,6 +2987,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true
@@ -3118,6 +3161,9 @@ contexts:
     - match: '(?i)\b(?:domain)\b'
       scope: keyword.pgsql
       set: create-domain|0
+    - match: '(?i)\b(?:aggregate)\b'
+      scope: keyword.pgsql
+      set: create-aggregate|0
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: keyword.pgsql
       pop: true

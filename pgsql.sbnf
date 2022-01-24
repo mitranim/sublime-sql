@@ -101,6 +101,7 @@ create : create-or-replace (
   | create-extension
   | create-type
   | create-domain
+  | create-aggregate
   | ident-kw
 ) ;
 
@@ -110,6 +111,7 @@ create-schema    : kw['schema']    if-not-exists? ident-decl-schema ;
 create-extension : kw['extension'] if-not-exists? ;
 create-type      : kw['type']      ident-decl-type (kw['as'] kw['enum']?)? ;
 create-domain    : kw['domain']    ident-decl-type kw['as'] ident-storage-type constraint? ;
+create-aggregate : kw['aggregate'] ident-decl-function fn-params? ;
 
 create-table :
   kw['table']
@@ -256,6 +258,7 @@ group : kw['group'] kw['by'] ;
 constraint : kw['constraint'] ident-decl-constraint? ;
 
 # WTB better naming scheme for entity name rules.
+# TODO: support various contextual keywords after the type, such as `primary key`.
 declare-column : ident-decl-column ident-storage-type ;
 
 create-or-replace    : (kw['create'] kw['or'] kw['replace']) | kw['create'] ;
