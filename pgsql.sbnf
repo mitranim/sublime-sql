@@ -86,7 +86,7 @@ kw-common :
   | is
   | order
   | group
-  | kw['commit|rollback|between']
+  | kw['commit|rollback|between|full']
 ;
 
 # https://www.postgresql.org/docs/current/sql-commands.html
@@ -167,6 +167,7 @@ alter-table-action :
   | (kw['drop']   alter-table-action-drop)
   | (kw['alter']  alter-table-action-alter)
   | (kw['rename'] alter-table-action-rename)
+  | kw['inherit']
 ;
 
 alter-table-action-add :

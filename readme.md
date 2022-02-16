@@ -7,10 +7,15 @@ Sublime Text syntax for Postgres SQL. Written in [SBNF](https://github.com/Benja
 
 Differences from built-in "SQL" and Package Control packages "PgSQL" and "PostgreSQL Syntax Highlighting":
 
-* Detects keywords contextually. Only _reserved_ keywords are context-free. Other keywords are detected only where they're expected.
-* Detects types contextually, where types are expected, without relying on a whitelist of built-ins. There's no difference between pre-defined and user-defined types.
+* Contextual types.
+  * Types are scoped _only_ where expected.
+  * No whitelist of built-ins.
+  * No difference between pre-defined and user-defined types.
+* Conservative use of keywords.
+  * Only reserved keywords and extremely common keywords are context-free.
+  * Other keywords are contextual, where expected.
 * No unnecessary scopes for built-in functions or types.
-* Prefers to scope keywords as `keyword` rather than `storage` (may reconsider for some contexts).
+* Prefers to scope keywords as `keyword` rather than `storage`.
 * Adheres more closely to ST scope conventions while respecting SQL semantics.
 * Supports ordinal parameters like `$1` and named parameters like `:ident`.
 
