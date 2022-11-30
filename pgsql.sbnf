@@ -86,7 +86,8 @@ kw-common :
   | is
   | order
   | group
-  | kw['commit|rollback|between|full']
+  | join
+  | kw['set|commit|rollback|between|full']
 ;
 
 # https://www.postgresql.org/docs/current/sql-commands.html
@@ -113,12 +114,14 @@ create-type      : kw['type']      ident-decl-type (kw['as'] kw['enum']?)? ;
 create-domain    : kw['domain']    ident-decl-type kw['as'] ident-storage-type constraint? ;
 create-aggregate : kw['aggregate'] ident-decl-function fn-params? ;
 
+# https://www.postgresql.org/docs/current/sql-createtable.html
 create-table :
-  kw['table']
+  kw['global|local|temporary|temp|unlogged']? kw['table']
   if-not-exists?
   ident-decl-table
   paren-begin
-  (declare-column (comma? constraint | comma declare-column | any)*)?
+  # Needs to be simplified.
+  ((constraint | declare-column) (comma? constraint | comma declare-column | any)*)?
   paren-end
 ;
 
@@ -149,6 +152,8 @@ create-function :
 ;
 
 create-index : kw['unique']? kw['index'] if-not-exists? ident-decl-index ;
+
+# TODO: parameter list for `recursive view`.
 create-view  : kw['materialized|recursive']? kw['view'] ident-decl-view ;
 
 alter-table{meta.alter.table} :
@@ -229,7 +234,9 @@ param-typed : ident-decl-param? ident-storage-type ;
 fn-return : kw['returns'] (
   NONE
   | kw['trigger']
-  | kw['setof']? ident-storage-type
+  | kw['setof'] ident-storage-type
+  | kw['table'] fn-params
+  | ident-storage-type
 ) ;
 
 # https://www.postgresql.org/docs/current/sql-createfunction.html
@@ -254,7 +261,22 @@ is :
 ;
 
 order : kw['order'] kw['by'] ;
+
 group : kw['group'] kw['by'] ;
+
+# https://www.postgresql.org/docs/current/sql-select.html
+join :
+  NONE
+  | kw['cross'] kw['join']
+  | kw['natural']? join-type
+;
+
+# https://www.postgresql.org/docs/current/sql-select.html
+join-type :
+  NONE
+  | kw['inner']? kw['join']
+  | kw['left|right|full'] kw['outer']? kw['join']
+;
 
 constraint : kw['constraint'] ident-decl-constraint? ;
 
@@ -282,10 +304,8 @@ ident-ns[scope] : '(#[IDENT]|#[IDENT_QUOTED]|(\()\s*(?:#[IDENT]|#[IDENT_QUOTED])
 } ;
 
 # TODO better name.
-#
-# TODO support types with `[]`, types consisting of multiple words, parametrized
-# types, etc.
-ident-storage-type : ident-ns? type ;
+# TODO support types consisting of multiple words, parametrized types, etc.
+ident-storage-type : ident-ns? type (bracket-begin bracket-end)? ;
 
 type{storage.type} : type-char | ident ;
 
@@ -297,7 +317,7 @@ type-char :
 ;
 
 # Rules starting with "ident-decl-" must use "declaration" scopes, as opposed
-# to "usage" scopes. Most of these scopes should be indexed.
+# to "usage" scopes. Most of these scopes should be added to symbol index.
 ident-decl-param      : ident-ns? id['variable.parameter'] ;
 ident-decl-column     : ident-ns? id['variable.other.member.declaration'] ;
 ident-decl-constraint : ident-ns? id['entity.name.constraint'] ;

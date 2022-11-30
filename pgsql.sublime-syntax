@@ -24,13 +24,13 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+      set: [ident-storage-type|3, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '"[^"]*"'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -91,13 +91,13 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+      set: [ident-storage-type|3, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '"[^"]*"'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -591,8 +591,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!braces@2
+    - include: include!braces@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -608,7 +608,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -649,21 +663,24 @@ contexts:
     - match: '\S'
       fail: braces@1
   # Rule: braces
-  #  For branch point 'braces@2'
-  braces|3|braces@2:
+  #  For branch point 'braces@3'
+  braces|3|braces@3:
     - match: '(?i)\b(?:or)\b'
       scope: keyword.pgsql
       set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
     - match: '\S'
-      fail: braces@2
+      fail: braces@3
   # Rule: braces
-  #  For branch point 'braces@2'
-  braces|4|braces@2:
+  #  For branch point 'braces@3'
+  braces|4|braces@3:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -753,9 +770,8 @@ contexts:
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
       set: braces|0
-    - match: 'dede961a7c944bdca31f56b82e486e05'
-      set: braces|0
     - include: include!braces@2
+    - include: include!braces@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       set: [braces|0, alter|0]
@@ -771,7 +787,22 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [braces|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      set: [braces|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      set: [braces|0, join-type|1]
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      set: [braces|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+      set: braces|0
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      set: [braces|0, join-type|2]
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
       set: braces|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
@@ -793,6 +824,14 @@ contexts:
     - match: '"[^"]*"'
       scope: variable.other.pgsql
       set: braces|0
+  # Rule: bracket-end
+  bracket-end|0:
+    - match: '\]'
+      scope: punctuation.section.brackets.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
   # Rule: brackets
   brackets|0:
     - match: '\.'
@@ -834,8 +873,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!brackets@2
+    - include: include!brackets@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -851,7 +890,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -892,21 +945,24 @@ contexts:
     - match: '\S'
       fail: brackets@1
   # Rule: brackets
-  #  For branch point 'brackets@2'
-  brackets|3|brackets@2:
+  #  For branch point 'brackets@3'
+  brackets|3|brackets@3:
     - match: '(?i)\b(?:or)\b'
       scope: keyword.pgsql
       set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
     - match: '\S'
-      fail: brackets@2
+      fail: brackets@3
   # Rule: brackets
-  #  For branch point 'brackets@2'
-  brackets|4|brackets@2:
+  #  For branch point 'brackets@3'
+  brackets|4|brackets@3:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -996,9 +1052,8 @@ contexts:
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
       set: brackets|0
-    - match: 'dede961a7c944bdca31f56b82e486e05'
-      set: brackets|0
     - include: include!brackets@2
+    - include: include!brackets@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       set: [brackets|0, alter|0]
@@ -1014,7 +1069,22 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [brackets|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, join-type|1]
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+      set: brackets|0
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      set: [brackets|0, join-type|2]
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
       set: brackets|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
@@ -1040,13 +1110,13 @@ contexts:
     - meta_include_prototype: false
     - match: ','
       scope: punctuation.separator.sequence.pgsql
-      push: create-table|5|create-table@1
+      push: create-table|6|create-table@1
       pop: true
   comma|1|create-table@1:
     - meta_include_prototype: false
     - match: ','
       scope: punctuation.separator.sequence.pgsql
-      push: create-table|6|create-table@1
+      push: create-table|7|create-table@1
       pop: true
   comma|2|create-table@1:
     - meta_include_prototype: false
@@ -1088,13 +1158,13 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [fn-params|11, id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta, ident|0]
+      set: [fn-params|16, id@WydlbnRpdHkubmFtZS5mdW5jdGlvbidd|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: entity.name.function.pgsql
-      set: fn-params|11
+      set: fn-params|16
     - match: '"[^"]*"'
       scope: entity.name.function.pgsql
-      set: fn-params|11
+      set: fn-params|16
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -1132,16 +1202,16 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [constraint|0, type|0]
+      set: [constraint|0, ident-storage-type|1]
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [constraint|0, type|meta, type-char|0]
+      set: [constraint|0, ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      set: constraint|0
+      set: [constraint|0, ident-storage-type|2]
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      set: constraint|0
+      set: [constraint|0, ident-storage-type|2]
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -1188,7 +1258,7 @@ contexts:
   create-function|2:
     - match: '\('
       scope: punctuation.section.parens.begin.pgsql
-      set: [create-function|3, fn-params|0]
+      set: [create-function|3, fn-params|1]
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -1332,51 +1402,52 @@ contexts:
       pop: true
   # Rule: create-table
   create-table|0:
-    - match: '(?i)\b(?:if)\b'
+    - match: '(?i)\b(?:table)\b'
       scope: keyword.pgsql
-      set: [create-table|1, if-not-exists|0]
-    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
-      captures:
-        1: variable.other.pgsql
-        2: punctuation.section.parens.begin.pgsql
-        3: punctuation.section.parens.end.pgsql
-        4: punctuation.accessor.dot.pgsql
-      set: [create-table|2, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: entity.name.type.table.pgsql
-      set: create-table|2
-    - match: '"[^"]*"'
-      scope: entity.name.type.table.pgsql
-      set: create-table|2
+      set: create-table|1
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-table
   create-table|1:
+    - match: '(?i)\b(?:if)\b'
+      scope: keyword.pgsql
+      set: [create-table|2, if-not-exists|0]
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [create-table|2, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
+      set: [create-table|3, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: entity.name.type.table.pgsql
-      set: create-table|2
+      set: create-table|3
     - match: '"[^"]*"'
       scope: entity.name.type.table.pgsql
-      set: create-table|2
+      set: create-table|3
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-table
-  #  For branch point 'create-table@3'
-  create-table|10|create-table@3:
+  #  For branch point 'create-table@4'
+  create-table|10|create-table@4:
+    - match: '(?i)\b(?:or)\b'
+      scope: keyword.pgsql
+      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
+    - match: '\S'
+      fail: create-table@4
+  # Rule: create-table
+  #  For branch point 'create-table@4'
+  create-table|11|create-table@4:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -1418,49 +1489,70 @@ contexts:
       pop: true
   # Rule: create-table
   #  For branch point 'create-table@1'
-  create-table|11|create-table@1:
+  create-table|12|create-table@1:
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: type|0
+      set: ident-storage-type|1
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
+      set: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-table
   create-table|2:
-    - match: '\('
-      scope: punctuation.section.parens.begin.pgsql
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      set: [create-table|3, id@WydlbnRpdHkubmFtZS50eXBlLnRhYmxlJ10|meta, ident|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: entity.name.type.table.pgsql
+      set: create-table|3
+    - match: '"[^"]*"'
+      scope: entity.name.type.table.pgsql
       set: create-table|3
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-table
   create-table|3:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: create-table|4
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: create-table
+  create-table|4:
+    - match: '(?i)\b(?:constraint)\b'
+      scope: keyword.pgsql
+      set: [create-table|5, ident-decl-constraint|1]
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [create-table|4, ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+      set: [create-table|5, ident-storage-type|3, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.member.declaration.pgsql
-      set: [create-table|4, ident-storage-type|1]
+      set: [create-table|5, ident-storage-type|3]
     - match: '"[^"]*"'
       scope: variable.other.member.declaration.pgsql
-      set: [create-table|4, ident-storage-type|1]
+      set: [create-table|5, ident-storage-type|3]
     - match: '\)'
       scope: punctuation.section.parens.end.pgsql
       pop: true
@@ -1468,7 +1560,7 @@ contexts:
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: create-table
-  create-table|4:
+  create-table|5:
     - include: include!create-table@1
     - match: '(?i)\b(?:constraint)\b'
       scope: keyword.pgsql
@@ -1510,8 +1602,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!create-table@3
+    - include: include!create-table@4
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -1527,7 +1619,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -1551,7 +1657,7 @@ contexts:
       pop: true
   # Rule: create-table
   #  For branch point 'create-table@1'
-  create-table|5|create-table@1:
+  create-table|6|create-table@1:
     - match: '(?i)\b(?:constraint)\b'
       scope: keyword.pgsql
       set: ident-decl-constraint|1
@@ -1559,27 +1665,27 @@ contexts:
       fail: create-table@1
   # Rule: create-table
   #  For branch point 'create-table@1'
-  create-table|6|create-table@1:
+  create-table|7|create-table@1:
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+      set: [ident-storage-type|3, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.member.declaration.pgsql
-      push: create-table|11|create-table@1
+      push: create-table|12|create-table@1
       pop: true
     - match: '"[^"]*"'
       scope: variable.other.member.declaration.pgsql
-      push: create-table|11|create-table@1
+      push: create-table|12|create-table@1
       pop: true
     - match: '\S'
       fail: create-table@1
   # Rule: create-table
   #  For branch point 'create-table@2'
-  create-table|7|create-table@2:
+  create-table|8|create-table@2:
     - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
       scope: keyword.operator.pgsql
       pop: true
@@ -1587,7 +1693,7 @@ contexts:
       fail: create-table@2
   # Rule: create-table
   #  For branch point 'create-table@2'
-  create-table|8|create-table@2:
+  create-table|9|create-table@2:
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.pgsql
       pop: true
@@ -1596,14 +1702,6 @@ contexts:
       pop: true
     - match: '\S'
       fail: create-table@2
-  # Rule: create-table
-  #  For branch point 'create-table@3'
-  create-table|9|create-table@3:
-    - match: '(?i)\b(?:or)\b'
-      scope: keyword.pgsql
-      set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
-    - match: '\S'
-      fail: create-table@3
   # Rule: create-trigger
   create-trigger|0:
     - match: '(?i)\b(?:if)\b'
@@ -1728,9 +1826,12 @@ contexts:
   create|0:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -1778,13 +1879,13 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [ident-storage-type|1, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
+      set: [ident-storage-type|3, id@Wyd2YXJpYWJsZS5vdGhlci5tZW1iZXIuZGVjbGFyYXRpb24nXQ|meta, ident|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '"[^"]*"'
       scope: variable.other.member.declaration.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -1816,16 +1917,16 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [fn-meta|3, type|0]
+      set: [fn-meta|3, ident-storage-type|1]
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: meta.function.meta.pgsql storage.type.pgsql
-      set: [fn-meta|3, type|meta, type-char|0]
+      set: [fn-meta|3, ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: meta.function.meta.pgsql storage.type.pgsql
-      set: fn-meta|3
+      set: [fn-meta|3, ident-storage-type|2]
     - match: '"[^"]*"'
       scope: meta.function.meta.pgsql storage.type.pgsql
-      set: fn-meta|3
+      set: [fn-meta|3, ident-storage-type|2]
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -1839,14 +1940,16 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: [fn-meta|meta, type|0]
+      push: [fn-meta|meta, ident-storage-type|1]
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: meta.function.meta.pgsql storage.type.pgsql
-      push: [fn-meta|meta, type|meta, type-char|0]
+      push: [fn-meta|meta, ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: meta.function.meta.pgsql storage.type.pgsql
+      push: [fn-meta|meta, ident-storage-type|2]
     - match: '"[^"]*"'
       scope: meta.function.meta.pgsql storage.type.pgsql
+      push: [fn-meta|meta, ident-storage-type|2]
     - match: '(?=\S)'
       pop: true
   # Rule: fn-meta
@@ -1891,13 +1994,21 @@ contexts:
       pop: true
   # Rule: fn-params
   fn-params|0:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: fn-params|1
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-params
+  fn-params|1:
     - include: include!fn-params@1
     - include: include!fn-params@2
     - include: include!fn-params@3
     - include: include!fn-params@4
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      push: [type|meta, type-char|0]
+      push: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\.'
       scope: punctuation.accessor.dot.pgsql
     - match: ','
@@ -1936,8 +2047,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!fn-params@5
+    - include: include!fn-params@6
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -1953,7 +2064,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(\$)\d+'
       scope: variable.parameter.ordinal.pgsql
@@ -1970,129 +2095,24 @@ contexts:
       scope: invalid.illegal.pgsql
       pop: true
   # Rule: fn-params
-  #  For branch point 'fn-params@2'
-  fn-params|10|fn-params@2:
-    - match: '\('
-      scope: storage.type.pgsql punctuation.section.parens.begin.pgsql
-      set: [type|meta, type-char|1]
-    - match: '(?=\S)'
-      pop: true
-  # Rule: fn-params
-  fn-params|11:
-    - match: '\('
-      scope: punctuation.section.parens.begin.pgsql
-      set: fn-params|0
-    - match: '(?=\S)'
-      pop: true
-  # Rule: fn-params
-  #  For branch point 'fn-params@2'
-  fn-params|1|fn-params@2:
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: variable.parameter.pgsql
-      push: fn-params|9|fn-params@2
-      pop: true
-    - match: '"[^"]*"'
-      scope: variable.parameter.pgsql
-      push: fn-params|9|fn-params@2
-      pop: true
-    - match: '\S'
-      fail: fn-params@2
-  # Rule: fn-params
-  #  For branch point 'fn-params@2'
-  fn-params|2|fn-params@2:
-    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
-      scope: storage.type.pgsql
-      push: fn-params|10|fn-params@2
-      pop: true
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '"[^"]*"'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '\S'
-      fail: fn-params@2
-  # Rule: fn-params
-  #  For branch point 'fn-params@2'
-  fn-params|3|fn-params@2:
-    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
-      scope: keyword.operator.pgsql
-      pop: true
-    - match: '\S'
-      fail: fn-params@2
-  # Rule: fn-params
-  #  For branch point 'fn-params@2'
-  fn-params|4|fn-params@2:
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: variable.other.pgsql
-      pop: true
-    - match: '"[^"]*"'
-      scope: variable.other.pgsql
-      pop: true
-    - match: '\S'
-      fail: fn-params@2
-  # Rule: fn-params
-  #  For branch point 'fn-params@3'
-  fn-params|5|fn-params@3:
-    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
-      captures:
-        1: variable.other.pgsql
-        2: punctuation.section.parens.begin.pgsql
-        3: punctuation.section.parens.end.pgsql
-        4: punctuation.accessor.dot.pgsql
-      push: fn-params|2|fn-params@2
-      pop: true
-    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
-      scope: storage.type.pgsql
-      push: fn-params|10|fn-params@2
-      pop: true
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '"[^"]*"'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '\S'
-      fail: fn-params@3
-  # Rule: fn-params
-  #  For branch point 'fn-params@4'
-  fn-params|6|fn-params@4:
-    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
-      captures:
-        1: variable.other.pgsql
-        2: punctuation.section.parens.begin.pgsql
-        3: punctuation.section.parens.end.pgsql
-        4: punctuation.accessor.dot.pgsql
-      push: fn-params|2|fn-params@2
-      pop: true
-    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
-      scope: storage.type.pgsql
-      push: fn-params|10|fn-params@2
-      pop: true
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '"[^"]*"'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '\S'
-      fail: fn-params@4
-  # Rule: fn-params
-  #  For branch point 'fn-params@5'
-  fn-params|7|fn-params@5:
+  #  For branch point 'fn-params@6'
+  fn-params|10|fn-params@6:
     - match: '(?i)\b(?:or)\b'
       scope: keyword.pgsql
       set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
     - match: '\S'
-      fail: fn-params@5
+      fail: fn-params@6
   # Rule: fn-params
-  #  For branch point 'fn-params@5'
-  fn-params|8|fn-params@5:
+  #  For branch point 'fn-params@6'
+  fn-params|11|fn-params@6:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -2134,25 +2154,174 @@ contexts:
       pop: true
   # Rule: fn-params
   #  For branch point 'fn-params@2'
-  fn-params|9|fn-params@2:
+  fn-params|12|fn-params@2:
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: type|0
+      set: ident-storage-type|1
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
+      set: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '"[^"]*"'
       scope: storage.type.pgsql
+      set: ident-storage-type|2
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|13|fn-params@2:
+    - match: '\('
+      scope: storage.type.pgsql punctuation.section.parens.begin.pgsql
+      set: [ident-storage-type|2, type|meta, type-char|1]
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|14|fn-params@2:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      set: bracket-end|0
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|15|fn-params@2:
+    - match: '\]'
+      scope: punctuation.section.brackets.end.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: fn-params
+  fn-params|16:
+    - match: '\('
+      scope: punctuation.section.parens.begin.pgsql
+      set: fn-params|1
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|2|fn-params@2:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.parameter.pgsql
+      push: fn-params|12|fn-params@2
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.parameter.pgsql
+      push: fn-params|12|fn-params@2
       pop: true
     - match: '\S'
       fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|3|fn-params@2:
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|13|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|4|fn-params@2:
+    - match: '(?!<[\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-])\*(?=[^\*\/\<\>\=\~\!\@#\%\^\&\|\`\?\+\-]|$)'
+      scope: keyword.operator.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@2'
+  fn-params|5|fn-params@2:
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '"[^"]*"'
+      scope: variable.other.pgsql
+      pop: true
+    - match: '\S'
+      fail: fn-params@2
+  # Rule: fn-params
+  #  For branch point 'fn-params@3'
+  fn-params|6|fn-params@3:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|3|fn-params@2
+      pop: true
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|13|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '\S'
+      fail: fn-params@3
+  # Rule: fn-params
+  #  For branch point 'fn-params@3'
+  fn-params|7|fn-params@3:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: fn-params|15|fn-params@2
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+  # Rule: fn-params
+  #  For branch point 'fn-params@4'
+  fn-params|8|fn-params@4:
+    - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
+      captures:
+        1: variable.other.pgsql
+        2: punctuation.section.parens.begin.pgsql
+        3: punctuation.section.parens.end.pgsql
+        4: punctuation.accessor.dot.pgsql
+      push: fn-params|3|fn-params@2
+      pop: true
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      push: fn-params|13|fn-params@2
+      pop: true
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      push: fn-params|14|fn-params@2
+      pop: true
+    - match: '\S'
+      fail: fn-params@4
+  # Rule: fn-params
+  #  For branch point 'fn-params@4'
+  fn-params|9|fn-params@4:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      push: fn-params|15|fn-params@2
+      pop: true
+    - match: '(?=\S)'
+      pop: true
   # Rule: fn-return
   fn-return|0:
     - match: 'dede961a7c944bdca31f56b82e486e05'
@@ -2162,23 +2331,26 @@ contexts:
       pop: true
     - match: '(?i)\b(?:setof)\b'
       scope: keyword.pgsql
-      set: ident-storage-type|1
+      set: ident-storage-type|3
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: fn-params|0
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: type|0
+      set: ident-storage-type|1
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
+      set: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -2433,7 +2605,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: create-table|7|create-table@2
+      push: create-table|8|create-table@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|3|create-table@2:
     - meta_include_prototype: false
@@ -2443,7 +2615,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: create-table|8|create-table@2
+      push: create-table|9|create-table@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|4|fn-params@2:
     - meta_include_prototype: false
@@ -2453,7 +2625,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: fn-params|1|fn-params@2
+      push: fn-params|2|fn-params@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|5|fn-params@2:
     - meta_include_prototype: false
@@ -2463,7 +2635,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: fn-params|2|fn-params@2
+      push: fn-params|3|fn-params@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|6|fn-params@2:
     - meta_include_prototype: false
@@ -2473,7 +2645,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: fn-params|3|fn-params@2
+      push: fn-params|4|fn-params@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|7|fn-params@2:
     - meta_include_prototype: false
@@ -2483,7 +2655,7 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      push: fn-params|4|fn-params@2
+      push: fn-params|5|fn-params@2
       pop: true
   ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|8|brackets@1:
     - meta_include_prototype: false
@@ -2531,36 +2703,57 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: type|0
+      set: ident-storage-type|1
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
+      set: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '(?=\S)'
       pop: true
   # Rule: ident-storage-type
   ident-storage-type|1:
+    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
+      scope: storage.type.pgsql
+      set: [ident-storage-type|2, type|meta, type-char|0]
+    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
+      scope: storage.type.pgsql
+      set: ident-storage-type|2
+    - match: '"[^"]*"'
+      scope: storage.type.pgsql
+      set: ident-storage-type|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: ident-storage-type
+  ident-storage-type|2:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.pgsql
+      set: bracket-end|0
+    - match: '(?=\S)'
+      pop: true
+  # Rule: ident-storage-type
+  ident-storage-type|3:
     - match: '(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.)'
       captures:
         1: variable.other.pgsql
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: type|0
+      set: ident-storage-type|1
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
+      set: [ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      pop: true
+      set: ident-storage-type|2
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -2577,12 +2770,13 @@ contexts:
     - meta_include_prototype: false
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: variable.parameter.pgsql
-      push: fn-params|5|fn-params@3
+      push: fn-params|6|fn-params@3
       pop: true
   ident|2|fn-params@3:
     - meta_include_prototype: false
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
+      push: fn-params|7|fn-params@3
       pop: true
   ident|3|fn-params@3:
     - meta_include_prototype: false
@@ -2593,12 +2787,13 @@ contexts:
     - meta_include_prototype: false
     - match: '"[^"]*"'
       scope: variable.parameter.pgsql
-      push: fn-params|6|fn-params@4
+      push: fn-params|8|fn-params@4
       pop: true
   ident|5|fn-params@4:
     - meta_include_prototype: false
     - match: '"[^"]*"'
       scope: storage.type.pgsql
+      push: fn-params|9|fn-params@4
       pop: true
   ident|6|fn-params@4:
     - meta_include_prototype: false
@@ -2636,11 +2831,19 @@ contexts:
         - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|1|braces@1
   # Include context for branch point braces@2
   include!braces@2:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: braces@2
       branch:
-        - word@WydjcmVhdGUnXQ|0|braces@2
-        - word@WydjcmVhdGUnXQ|1|braces@2
+        - kw-common|0|braces@2
+        - join|0|braces@2
+        - join-type|0|braces@2
+  # Include context for branch point braces@3
+  include!braces@3:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: braces@3
+      branch:
+        - word@WydjcmVhdGUnXQ|0|braces@3
+        - word@WydjcmVhdGUnXQ|1|braces@3
   # Include context for branch point brackets@1
   include!brackets@1:
     - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
@@ -2650,11 +2853,19 @@ contexts:
         - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|9|brackets@1
   # Include context for branch point brackets@2
   include!brackets@2:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: brackets@2
       branch:
-        - word@WydjcmVhdGUnXQ|6|brackets@2
-        - word@WydjcmVhdGUnXQ|7|brackets@2
+        - kw-common|3|brackets@2
+        - join|3|brackets@2
+        - join-type|5|brackets@2
+  # Include context for branch point brackets@3
+  include!brackets@3:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: brackets@3
+      branch:
+        - word@WydjcmVhdGUnXQ|6|brackets@3
+        - word@WydjcmVhdGUnXQ|7|brackets@3
   # Include context for branch point create-table@1
   include!create-table@1:
     - match: '(?=,)'
@@ -2672,11 +2883,19 @@ contexts:
         - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|3|create-table@2
   # Include context for branch point create-table@3
   include!create-table@3:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: create-table@3
       branch:
-        - word@WydjcmVhdGUnXQ|2|create-table@3
-        - word@WydjcmVhdGUnXQ|3|create-table@3
+        - kw-common|1|create-table@3
+        - join|1|create-table@3
+        - join-type|3|create-table@3
+  # Include context for branch point create-table@4
+  include!create-table@4:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: create-table@4
+      branch:
+        - word@WydjcmVhdGUnXQ|2|create-table@4
+        - word@WydjcmVhdGUnXQ|3|create-table@4
   # Include context for branch point fn-params@1
   include!fn-params@1:
     - match: '(?=(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b)'
@@ -2711,11 +2930,19 @@ contexts:
         - ident|6|fn-params@4
   # Include context for branch point fn-params@5
   include!fn-params@5:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: fn-params@5
       branch:
-        - word@WydjcmVhdGUnXQ|4|fn-params@5
-        - word@WydjcmVhdGUnXQ|5|fn-params@5
+        - kw-common|2|fn-params@5
+        - join|2|fn-params@5
+        - join-type|4|fn-params@5
+  # Include context for branch point fn-params@6
+  include!fn-params@6:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: fn-params@6
+      branch:
+        - word@WydjcmVhdGUnXQ|4|fn-params@6
+        - word@WydjcmVhdGUnXQ|5|fn-params@6
   # Include context for branch point main@1
   include!main@1:
     - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
@@ -2725,11 +2952,19 @@ contexts:
         - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|13|main@1
   # Include context for branch point main@2
   include!main@2:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: main@2
       branch:
-        - word@WydjcmVhdGUnXQ|10|main@2
-        - word@WydjcmVhdGUnXQ|11|main@2
+        - kw-common|5|main@2
+        - join|5|main@2
+        - join-type|7|main@2
+  # Include context for branch point main@3
+  include!main@3:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: main@3
+      branch:
+        - word@WydjcmVhdGUnXQ|10|main@3
+        - word@WydjcmVhdGUnXQ|11|main@3
   # Include context for branch point parens@1
   include!parens@1:
     - match: '(?=(\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*"|(\()\s*(?:\b[[:alpha:]_][[:alnum:]_]*\b|"[^"]*")\s*(\)))\s*(\.))'
@@ -2739,11 +2974,19 @@ contexts:
         - ident-ns@Wyd2YXJpYWJsZS5vdGhlcidd|11|parens@1
   # Include context for branch point parens@2
   include!parens@2:
-    - match: '(?=(?i)\b(?:create)\b)'
+    - match: '(?=dede961a7c944bdca31f56b82e486e05)'
       branch_point: parens@2
       branch:
-        - word@WydjcmVhdGUnXQ|8|parens@2
-        - word@WydjcmVhdGUnXQ|9|parens@2
+        - kw-common|4|parens@2
+        - join|4|parens@2
+        - join-type|6|parens@2
+  # Include context for branch point parens@3
+  include!parens@3:
+    - match: '(?=(?i)\b(?:create)\b)'
+      branch_point: parens@3
+      branch:
+        - word@WydjcmVhdGUnXQ|8|parens@3
+        - word@WydjcmVhdGUnXQ|9|parens@3
   # Rule: is
   is|0:
     - match: '(?i)\b(?:not)\b'
@@ -2780,6 +3023,105 @@ contexts:
       set: [kw@Wydmcm9tJ10|meta, word@Wydmcm9tJ10|0]
     - match: '\S'
       scope: invalid.illegal.pgsql
+      pop: true
+  join-type|0|braces@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  # Rule: join-type
+  join-type|1:
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      set: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      set: join-type|2
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: join-type
+  join-type|2:
+    - match: '(?i)\b(?:outer)\b'
+      scope: keyword.pgsql
+      set: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  join-type|3|create-table@3:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join-type|4|fn-params@5:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join-type|5|brackets@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join-type|6|parens@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join-type|7|main@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|0|braces@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|1|create-table@3:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|2|fn-params@5:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|3|brackets@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|4|parens@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  join|5|main@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|0|braces@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|1|create-table@3:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|2|fn-params@5:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|3|brackets@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|4|parens@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
+      pop: true
+  kw-common|5|main@2:
+    - meta_include_prototype: false
+    - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
   # Meta scope context for kw['using']
   kw@Wyd1c2luZydd|meta:
@@ -2828,6 +3170,11 @@ contexts:
       pop: true
   # Meta scope context for kw['invoker|definer']
   kw@WydpbnZva2VyfGRlZmluZXInXQ|meta:
+    - meta_content_scope: keyword.pgsql
+    - match: ''
+      pop: true
+  # Meta scope context for kw['join']
+  kw@Wydqb2luJ10|meta:
     - meta_content_scope: keyword.pgsql
     - match: ''
       pop: true
@@ -2892,8 +3239,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!main@2
+    - include: include!main@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -2909,7 +3256,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -2945,21 +3306,24 @@ contexts:
     - match: '\S'
       fail: main@1
   # Rule: main
-  #  For branch point 'main@2'
-  main|2|main@2:
+  #  For branch point 'main@3'
+  main|2|main@3:
     - match: '(?i)\b(?:or)\b'
       scope: keyword.pgsql
       set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
     - match: '\S'
-      fail: main@2
+      fail: main@3
   # Rule: main
-  #  For branch point 'main@2'
-  main|3|main@2:
+  #  For branch point 'main@3'
+  main|3|main@3:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -3061,8 +3425,8 @@ contexts:
       scope: keyword.operator.pgsql
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
-    - match: 'dede961a7c944bdca31f56b82e486e05'
     - include: include!parens@2
+    - include: include!parens@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       push: alter|0
@@ -3078,7 +3442,21 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       push: [kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      push: join-type|1
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      push: [kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      push: join-type|2
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
       scope: keyword.reserved.pgsql
@@ -3119,21 +3497,24 @@ contexts:
     - match: '\S'
       fail: parens@1
   # Rule: parens
-  #  For branch point 'parens@2'
-  parens|3|parens@2:
+  #  For branch point 'parens@3'
+  parens|3|parens@3:
     - match: '(?i)\b(?:or)\b'
       scope: keyword.pgsql
       set: [create|0, kw@WydyZXBsYWNlJ10|meta, word@WydyZXBsYWNlJ10|0]
     - match: '\S'
-      fail: parens@2
+      fail: parens@3
   # Rule: parens
-  #  For branch point 'parens@2'
-  parens|4|parens@2:
+  #  For branch point 'parens@3'
+  parens|4|parens@3:
     - match: 'dede961a7c944bdca31f56b82e486e05'
       pop: true
-    - match: '(?i)\b(?:table)\b'
+    - match: '(?i)\b(?:global|local|temporary|temp|unlogged)\b'
       scope: keyword.pgsql
       set: create-table|0
+    - match: '(?i)\b(?:table)\b'
+      scope: keyword.pgsql
+      set: create-table|1
     - match: '(?i)\b(?:trigger)\b'
       scope: keyword.pgsql
       set: create-trigger|0
@@ -3223,9 +3604,8 @@ contexts:
     - match: '(?i)\b(?:true|false)\b'
       scope: constant.language.bool.pgsql
       set: parens|0
-    - match: 'dede961a7c944bdca31f56b82e486e05'
-      set: parens|0
     - include: include!parens@2
+    - include: include!parens@3
     - match: '(?i)\b(?:alter)\b'
       scope: keyword.pgsql
       set: [parens|0, alter|0]
@@ -3241,7 +3621,22 @@ contexts:
     - match: '(?i)\b(?:group)\b'
       scope: keyword.pgsql
       set: [parens|0, kw@WydieSdd|meta, word@WydieSdd|0]
-    - match: '(?i)\b(?:commit|rollback|between|full)\b'
+    - match: '(?i)\b(?:cross)\b'
+      scope: keyword.pgsql
+      set: [parens|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:natural)\b'
+      scope: keyword.pgsql
+      set: [parens|0, join-type|1]
+    - match: '(?i)\b(?:inner)\b'
+      scope: keyword.pgsql
+      set: [parens|0, kw@Wydqb2luJ10|meta, word@Wydqb2luJ10|0]
+    - match: '(?i)\b(?:join)\b'
+      scope: keyword.pgsql
+      set: parens|0
+    - match: '(?i)\b(?:left|right|full)\b'
+      scope: keyword.pgsql
+      set: [parens|0, join-type|2]
+    - match: '(?i)\b(?:set|commit|rollback|between|full)\b'
       scope: keyword.pgsql
       set: parens|0
     - match: '(?i)\b(?:all|analyse|analyze|and|any|array|as|asc|asymmetric|both|case|cast|check|collate|column|constraint|create|current_catalog|current_date|current_role|current_time|current_timestamp|current_user|default|deferrable|desc|distinct|do|else|end|except|false|fetch|for|foreign|from|grant|group|having|in|initially|intersect|into|lateral|leading|limit|localtime|localtimestamp|not|null|offset|on|only|or|order|placing|primary|references|returning|select|session_user|some|symmetric|table|then|to|trailing|true|union|unique|user|using|variadic|when|where|window|with)\b'
@@ -3309,31 +3704,16 @@ contexts:
         2: punctuation.section.parens.begin.pgsql
         3: punctuation.section.parens.end.pgsql
         4: punctuation.accessor.dot.pgsql
-      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, type|0]
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, ident-storage-type|1]
     - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
       scope: storage.type.pgsql
-      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, type|meta, type-char|0]
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, ident-storage-type|2, type|meta, type-char|0]
     - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
       scope: storage.type.pgsql
-      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0]
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, ident-storage-type|2]
     - match: '"[^"]*"'
       scope: storage.type.pgsql
-      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0]
-    - match: '\S'
-      scope: invalid.illegal.pgsql
-      pop: true
-  # Rule: type
-  type|0:
-    - meta_content_scope: storage.type.pgsql
-    - match: '(?i)\b(?:character\s+varying|varchar|character|char)\b'
-      scope: storage.type.pgsql
-      set: [type|meta, type-char|0]
-    - match: '\b[[:alpha:]_][[:alnum:]_]*\b'
-      scope: storage.type.pgsql
-      pop: true
-    - match: '"[^"]*"'
-      scope: storage.type.pgsql
-      pop: true
+      set: [kw@Wyd1c2luZydd|meta, word@Wyd1c2luZydd|0, ident-storage-type|2]
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
@@ -3372,77 +3752,77 @@ contexts:
     - match: '\S'
       scope: invalid.illegal.pgsql
       pop: true
-  word@WydjcmVhdGUnXQ|0|braces@2:
+  word@WydjcmVhdGUnXQ|0|braces@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: braces|3|braces@2
+      push: braces|3|braces@3
       pop: true
-  word@WydjcmVhdGUnXQ|10|main@2:
+  word@WydjcmVhdGUnXQ|10|main@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: main|2|main@2
+      push: main|2|main@3
       pop: true
-  word@WydjcmVhdGUnXQ|11|main@2:
+  word@WydjcmVhdGUnXQ|11|main@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: main|3|main@2
+      push: main|3|main@3
       pop: true
-  word@WydjcmVhdGUnXQ|1|braces@2:
+  word@WydjcmVhdGUnXQ|1|braces@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: braces|4|braces@2
+      push: braces|4|braces@3
       pop: true
-  word@WydjcmVhdGUnXQ|2|create-table@3:
+  word@WydjcmVhdGUnXQ|2|create-table@4:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: create-table|9|create-table@3
+      push: create-table|10|create-table@4
       pop: true
-  word@WydjcmVhdGUnXQ|3|create-table@3:
+  word@WydjcmVhdGUnXQ|3|create-table@4:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: create-table|10|create-table@3
+      push: create-table|11|create-table@4
       pop: true
-  word@WydjcmVhdGUnXQ|4|fn-params@5:
+  word@WydjcmVhdGUnXQ|4|fn-params@6:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: fn-params|7|fn-params@5
+      push: fn-params|10|fn-params@6
       pop: true
-  word@WydjcmVhdGUnXQ|5|fn-params@5:
+  word@WydjcmVhdGUnXQ|5|fn-params@6:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: fn-params|8|fn-params@5
+      push: fn-params|11|fn-params@6
       pop: true
-  word@WydjcmVhdGUnXQ|6|brackets@2:
+  word@WydjcmVhdGUnXQ|6|brackets@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: brackets|3|brackets@2
+      push: brackets|3|brackets@3
       pop: true
-  word@WydjcmVhdGUnXQ|7|brackets@2:
+  word@WydjcmVhdGUnXQ|7|brackets@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: brackets|4|brackets@2
+      push: brackets|4|brackets@3
       pop: true
-  word@WydjcmVhdGUnXQ|8|parens@2:
+  word@WydjcmVhdGUnXQ|8|parens@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: parens|3|parens@2
+      push: parens|3|parens@3
       pop: true
-  word@WydjcmVhdGUnXQ|9|parens@2:
+  word@WydjcmVhdGUnXQ|9|parens@3:
     - meta_include_prototype: false
     - match: '(?i)\b(?:create)\b'
       scope: keyword.pgsql
-      push: parens|4|parens@2
+      push: parens|4|parens@3
       pop: true
   # Rule: word['current']
   word@WydjdXJyZW50J10|0:
@@ -3488,6 +3868,13 @@ contexts:
   # Rule: word['invoker|definer']
   word@WydpbnZva2VyfGRlZmluZXInXQ|0:
     - match: '(?i)\b(?:invoker|definer)\b'
+      pop: true
+    - match: '\S'
+      scope: invalid.illegal.pgsql
+      pop: true
+  # Rule: word['join']
+  word@Wydqb2luJ10|0:
+    - match: '(?i)\b(?:join)\b'
       pop: true
     - match: '\S'
       scope: invalid.illegal.pgsql
